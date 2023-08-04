@@ -348,7 +348,7 @@ $("#encounter-details").on('input', 'input.enemy-value, input.cr-value', functio
 						let powerDecayFactor = 1;
 						let powerRatio = enemyPower / (playerPower[partyLevel]);
 
-						let ratioValues = [5, 2.5, 1.5, 1, 0.8, 0.4, 0.2];
+						let ratioValues = [5, 2.5, 1.5, 1, 0.67, 0.4, 0.2];
 						powerRatio = ratioValues.reduce(function(prev, curr) {
   						return (Math.abs(curr - powerRatio) < Math.abs(prev - powerRatio) ? curr : prev);
 						});
@@ -365,8 +365,10 @@ $("#encounter-details").on('input', 'input.enemy-value, input.cr-value', functio
 							powerDecayFactor = 0.8;
 						} else if (powerRatio == 0.4) {
 							powerDecayFactor = 0.67;
-						} else {
+						} else if (powerRatio == 0.2 {
 							powerDecayFactor = 0.5;
+						} else {
+							powerDecayFactor = 0
 						};
 
 						enemyPower = enemyPower * powerDecayFactor;
