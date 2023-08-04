@@ -1,0 +1,25 @@
+/* CSS for the stepper container */
+#stepper {
+	display: flex;
+	align-items: center;
+}
+
+/* CSS for the input field inside the stepper */
+#stepper input {
+	width: 40px;
+	text-align: center;
+}
+
+/* CSS for the buttons inside the stepper */
+#stepper button {
+	width: 30px;
+	height: 30px;
+}
+
+/*	CSS for the stepper inputs. */
+input.enemy-value, input.cr-value, input.party-level {
+	width: 2ch; /* Initial width based on 2 character spaces */
+	background-color: transparent;
+	border: none;
+	text-align: center;
+}

@@ -6,38 +6,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive viewport meta tag -->
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+	<!-- Page Name -->
 	<title>Challenge Rated</title>
 
 	<!-- Link to Bootstrap CDN -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
 
-	<style>
-		/* CSS for the stepper container */
-		#stepper {
-			display: flex;
-			align-items: center;
-		}
-
-		/* CSS for the input field inside the stepper */
-		#stepper input {
-			width: 40px;
-			text-align: center;
-		}
-
-		/* CSS for the buttons inside the stepper */
-		#stepper button {
-			width: 30px;
-			height: 30px;
-		}
-
-		input.enemy-value, input.cr-value, input.party-level {
-		width: 2ch; /* Initial width based on 2 character spaces */
-		background-color: transparent;
-		border: none;
-		text-align: center;
-		}
-
-	</style>
 </head>
 
 <body>
@@ -71,14 +46,15 @@
 
 				<!-- Row 3 -->
 				<!-- Party Level Input -->
-
-					<div class="d-flex flex-column justify-content-center mt-3">
+					<div class="d-flex justify-content-center mt-3">
 						<!-- Party level input -->
-						<p class="text-center">What level are your players?</p>
-						<div id="stepper" class="d-flex justify-content-center">
+						<p class="text-center">Player Level:</p>
+
+						<div class="slider-container">
 							<button id="down" onclick="down()">-</button>
-							<input type="number" id="party-level" class="text-center party-level" name="party-level" value="1" min="1" max="20" readonly>
+							<input type="range" min="1" max="20" value="10" class="slider party-level" id="partyLevelRange" name="party-level">
 							<button id="up" onclick="up()">+</button>
+							<p>Value: <span id="value"></span></p>
 						</div>
 					</div>
 
@@ -243,12 +219,26 @@ $("#encounter-details").on('input', 'input.enemy-value, input.cr-value', functio
 		<script>
 
 			let partyLevel = 1;
+			let slider = document.getElementById("partyLevelRange");
+			let output = document.getElementById("value");
+			let incrementButton = document.getElementById("up");
+			let decrementButton = document.getElementById("down");
+
+			// Display the default slider value
+			output.innerHTML = slider.value;
+
+			// Update the current slider value each time you drag the slider handle
+			slider.oninput = function() {
+				output.innerHTML = this.value;
+			}
 
 			// Function to increase the party level, with a max of 20
 			function up() {
-				if (partyLevel < 20) {
-					partyLevel++;
+				if(slider.value < 20) {
+					slider.value++;
+					partyLevel = slider.value;
 					document.getElementById("party-level").value = partyLevel;
+					output.innerHTML = slider.value;
 					updateEncounter();
 				}
 			}
@@ -256,7 +246,8 @@ $("#encounter-details").on('input', 'input.enemy-value, input.cr-value', functio
 			// Function to decrease the party level, with a minimum of 1
 			function down() {
 				if (partyLevel > 1) {
-					partyLevel--;
+					slider.value++;
+					partyLevel = slider.value;
 					document.getElementById("party-level").value = partyLevel;
 					updateEncounter();
 				}
