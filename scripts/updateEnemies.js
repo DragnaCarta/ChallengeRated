@@ -1,66 +1,31 @@
-let encounterSize = 1;
-let crValues = [ '0', '1/8', '1/4', '1/2', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ];
+function addCR(value) {
+	let div = $('<div>').attr('id', 'cr' + value).addClass('mb-3');
 
-// jQuery function to change button color on click
-$(document).ready(function(){
-	$(".encounter-size").click(function(){
-					$(".encounter-size").removeClass("btn-secondary").addClass("btn-outline-secondary"); // De-highlight all buttons
-					$(this).removeClass("btn-outline-secondary").addClass("btn-secondary"); // Highlight the clicked button
-					encounterSize = parseInt($(this).text()); // Update encounter size variable
+	let label = $('<label>').text('CR ' + value + ': ');
 
-					// Clear existing sub-rows
-					$("#encounter-details").empty();
+	let decrementButton = $('<button>').addClass('btn btn-secondary mr-3').text('-').on('click', function() {
+		let slider = $('#slider' + value);
+		if(slider.val() > 1) slider.val(parseInt(slider.val()) - 1);
+		$('#value' + value).text(slider.val());
+	});
 
-					for (let i = 0; i < encounterSize; i++) {
-						let newRow = $(`
-							<div class="d-flex align-items-center justify-content-center mt-2">
-							<div class="stepperEnemy d-flex align-items-center">
-							<button class="down btn btn-outline-secondary btn-sm" onclick="updateEnemies(this, -1)">-</button>
-							<input type="text" class="enemy-value mx-2" value="1" readonly>
-							<button class="up btn btn-outline-secondary btn-sm" onclick="updateEnemies(this, 1)">+</button>
-							</div>
-							<span class="mx-2">enemies of CR</span>
-							<div class="stepperCR d-flex align-items-center">
-							<button class="down btn btn-outline-secondary btn-sm" onclick="updateCR(this, -1)">-</button>
-							<input type="text" class="cr-value mx-2" value="0" readonly>
-							<button class="up btn btn-outline-secondary btn-sm" onclick="updateCR(this, 1)">+</button>
-							</div>
-							</div>
-							`);
-						$("#encounter-details").append(newRow);
-					}
+	let slider = $('<input>').attr({type: 'range', min: 1, max: 10, value: 1, id: 'slider' + value})
+		.on('input', function() {
+			$('#value' + value).text($(this).val());
+		});
 
-					// Add event listeners for all number inputs and cr-value inputs
-					$("#encounter-details input[type=number], .cr-value").change(updateEncounter);
+	let incrementButton = $('<button>').addClass('btn btn-secondary ml-3').text('+').on('click', function() {
+		let slider = $('#slider' + value);
+		if(slider.val() < 10) slider.val(parseInt(slider.val()) + 1);
+		$('#value' + value.text(slider.val()));
+	});
 
-					updateEncounter();
-				});
-});
+	let sliderValue = $('<span>').attr('id', 'value' + value).text('1');
 
-// Update the input width whenever its value changes
-$("#encounter-details").on('input', 'input.enemy-value, input.cr-value', function() {
-		let newWidth = ((this.value.length + 1) * 8);
-		this.style.width = newWidth + 'px';
-});
-
-function updateEnemies(button, direction) {
-	let input = $(button).siblings('.enemy-value');
-	let value = parseInt(input.val());
-	value += direction;
-	if (value >= 1 && value <= 10) {
-		input.val(value);
-		input[0].dispatchEvent(new Event('input', { bubbles: true }));
-	}
-	updateEncounter();
+	div.append(label, sliderValue, 'enemies', decrementButton, slider, incrementButton);
+	crList.append(div);
 }
 
-function updateCR(button, direction) {
-	let input = $(button).siblings('.cr-value');
-	let index = crValues.indexOf(input.val());
-	index += direction;
-	if (index >= 0 && index < crValues.length) {
-		input.val(crValues[index]);
-		input[0].dispatchEvent(new Event('input', { bubbles: true }));
-	}
-	updateEncounter();
+function removeCR(value) {
+	$('#cr' + value).remove();
 }

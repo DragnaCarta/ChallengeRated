@@ -100,7 +100,7 @@ function updateEncounter() {
 							powerDecayFactor = 0.8;
 						} else if (powerRatio == 0.4) {
 							powerDecayFactor = 0.67;
-						} else if (powerRatio == 0.2 {
+						} else if (powerRatio == 0.2) {
 							powerDecayFactor = 0.5;
 						} else {
 							powerDecayFactor = 0

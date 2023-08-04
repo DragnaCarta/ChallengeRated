@@ -23,3 +23,9 @@ input.enemy-value, input.cr-value, input.party-level {
 	border: none;
 	text-align: center;
 }
+
+/* CSS for Monster CS Buttons */
+.selected {
+	background-color: #007bff; /* Bootstrap primary button color */
+	color: white;
+}

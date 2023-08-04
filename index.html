@@ -1,135 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Standard meta tags -->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive viewport meta tag -->
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Standard meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive viewport meta tag -->
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-	<!-- Page Name -->
-	<title>Challenge Rated</title>
+  <!-- Page Name -->
+  <title>Challenge Rated</title>
 
-	<!-- Link to Bootstrap CDN -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+  <!-- Link to Bootstrap CDN -->  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+  <!-- Link to Bootstrap & JQuery Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
 
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Left empty column for padding -->
-			<div class="col-12 col-md-8 col-lg-6">
-				<!-- Center column with nine rows -->
-				<div class="text-center">
 
-				<!-- Row 1 -->
-				<!-- Title and Subtitle -->
+  <div class="container">
+
+		<!--              -->
+		<!-- Page Content -->
+		<!--              -->
+		<div class="row">
+	
+			<!--              -->
+			<!-- Left Padding -->
+			<!--              -->
+			<div class="d-none d-md-block col-md-2 col-lg-3"></div>
+	
+			<!--                -->
+			<!-- Central Column -->
+			<!--                -->
+			<div class="col-12 col-md-8 col-lg-6">
+	
+				<!--                  -->
+				<!-- Title & Subtitle -->
+				<!--                  -->
+				<section>
+	
+			  	<div class="text-center">
+	
 					<h1>CHALLENGE RATED</h1>
 					<h5>An encounter-building tool by <a href="https://www.patreon.com/DragnaCarta">DragnaCarta</a>.</h2>
+				  
+			  	</div> 
+	
+				</section>
+	
+				<!--            -->
+				<!-- Party Size -->
+				<!--            -->
+				<section>
+	
+			  	<div class="d-flex flex-column justify-content-center mt-3">
+	
+					<p class="text-center" >Number of Players</p>
+	
+					<div id="party-size-boxes" class="d-flex justify-content-center">
+				  	<button class="btn btn-outline-secondary party-size">1</button>
+				  	<button class="btn btn-outline-secondary party-size">2</button>
+				  	<button class="btn btn-outline-secondary party-size">3</button>
+				  	<button class="btn btn-outline-secondary party-size">4</button>
+				  	<button class="btn btn-outline-secondary party-size">5</button>
+				  	<button class="btn btn-outline-secondary party-size">6</button>
 					</div>
-
-				<!-- Row 2 -->
-				<!-- Party Size Input -->
-					<div class="d-flex flex-column justify-content-center mt-3">
-						<!-- Player number selection -->
-						<p class="text-center" >How many players are in your party?</p>
-						<div id="party-size-boxes" class="d-flex justify-content-center">
-							<button class="btn btn-outline-secondary party-size">1</button>
-							<button class="btn btn-outline-secondary party-size">2</button>
-							<button class="btn btn-outline-secondary party-size">3</button>
-							<button class="btn btn-outline-secondary party-size">4</button>
-							<button class="btn btn-outline-secondary party-size">5</button>
-							<button class="btn btn-outline-secondary party-size">6</button>
-						</div>
+	
+			  	</div>
+	
+				</section>
+	
+				
+				<!--             -->
+				<!-- Party Level -->
+				<!--             -->
+				<section>
+	
+			  	<div class="d-flex justify-content-center mt-3">
+	
+					<p class="text-center">Player Level:</p>
+	
+					<div class="slider-container">
+				  	<button id="down" onclick="down()">-</button>
+				  	<input type="range" min="1" max="20" value="10" class="slider party-level" id="partyLevelRange" name="party-level">
+				  	<button id="up" onclick="up()">+</button>
+				  	<p>Value: <span id="value"></span></p>
 					</div>
-
-				<!-- Row 3 -->
-				<!-- Party Level Input -->
-					<div class="d-flex justify-content-center mt-3">
-						<!-- Party level input -->
-						<p class="text-center">Player Level:</p>
-
-						<div class="slider-container">
-							<button id="down" onclick="down()">-</button>
-							<input type="range" min="1" max="20" value="10" class="slider party-level" id="partyLevelRange" name="party-level">
-							<button id="up" onclick="up()">+</button>
-							<p>Value: <span id="value"></span></p>
-						</div>
-					</div>
-
-				<!-- Row 4 -->
-				<!-- Encounter Size Input -->
-					<div class="d-flex flex-column justify-content-center mt-3">
-						<p class="text-center">How many different types of enemies are your players facing?</p>
-						<div id="encounter-size-boxes" class="d-flex justify-content-center">
-							<button class="btn btn-outline-secondary encounter-size">1</button>
-							<button class="btn btn-outline-secondary encounter-size">2</button>
-							<button class="btn btn-outline-secondary encounter-size">3</button>
-							<button class="btn btn-outline-secondary encounter-size">4</button>
-							<button class="btn btn-outline-secondary encounter-size">5</button>
-							<button class="btn btn-outline-secondary encounter-size">6</button>
-						</div>
-						<div id="encounter-details"></div>
-
-						<datalist id="cr-values">
-							<option value="0">
-							<option value="1/8">
-							<option value="1/4">
-							<option value="1/2">
-							<option value="1">
-							<option value="2">
-							<option value="3">
-							<option value="4">
-							<option value="5">
-							<option value="6">
-							<option value="7">
-							<option value="8">
-							<option value="9">
-							<option value="10">
-							<option value="11">
-							<option value="12">
-							<option value="13">
-							<option value="14">
-							<option value="15">
-							<option value="16">
-							<option value="17">
-							<option value="18">
-							<option value="19">
-							<option value="20">
-							<option value="21">
-							<option value="22">
-							<option value="23">
-							<option value="24">
-							<option value="25">
-							<option value="26">
-							<option value="27">
-							<option value="28">
-							<option value="29">
-							<option value="30">
-						</datalist>
-					</div>
-
-					<!-- Placeholder rows -->
-					<div class="mt-4">
-						<p id="party-size-label" class="text-center"></p>
-						<p id="party-level-label" class="text-center"></p>
-						<p id="party-power-label" class="text-center"></p>
-						<p id="encounter-size-label" class="text-center"></p>
-						<p id="encounter-power-label" class="text-center"></p>
-						<p id="hp-lost-label" class="text-center"></p>
-					</div>
-				</div>
-				<div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Right empty column for padding -->
+	
+			  	</div>
+	
+				</section>
+			  
+	
+				<!--           -->
+				<!-- Enemy CRs -->
+				<!--           -->
+				<section>
+	
+			  	<div class="d-flex flex-column justify-content-center mt-3">
+	
+					<p class="text-center">Select all enemy Challenge Ratings that will be used in this encounter.</p>
+	
+					<!-- Empty CR Grid (filled by buildCRGrid.js) -->
+					<div class="row" id="crGrid"></div>
+	
+			  	</div>
+	
+				</section>
+	
+				<!--              -->
+				<!-- Selected CRs -->
+				<!--              -->
+				<section>
+	
+			  	<div class="mt-3" id="crList"></div>
+	
+				</section>
+	  
+	
+	
+				<!--                   -->
+				<!-- Encounter Summary -->
+				<!--                   -->
+				<section>
+	
+			  	<div class="mt-4">
+					<p id="party-size-label" class="text-center"></p>
+					<p id="party-level-label" class="text-center"></p>
+					<p id="party-power-label" class="text-center"></p>
+					<p id="encounter-size-label" class="text-center"></p>
+					<p id="encounter-power-label" class="text-center"></p>
+					<p id="hp-lost-label" class="text-center"></p>
+			  	</div>
+				  
+				</section>
+	
 			</div>
+	  
+	  
+			<!--               -->
+			<!-- Right Padding -->
+			<!--               -->
+			<div class="d-none d-md-block col-md-2 col-lg-3"></div>
+	
 		</div>
 
-		<!-- Bootstrap and jQuery CDN links -->
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="updateEncounter.js"></script>
-		<script type="text/javascript" src="updateParty.js"></script>
-		<script type="text/javascript" src="updateEnemies.js"></script>
+	</div>
 
-	</body>
+	<!-- Script Links -->
+	<script type="text/javascript" src="scripts/buildCRGrid.js"></script>
+	<script type="text/javascript" src="scripts/updateEncounter.js"></script>
+	<script type="text/javascript" src="scripts/updateParty.js"></script>
+	<script type="text/javascript" src="scripts/updateEnemies.js"></script>
+
+  </body>
 </html>
