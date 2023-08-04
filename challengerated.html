@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Standard meta tags -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive viewport meta tag -->
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<title>Challenge Rated</title>
+
+	<!-- Link to Bootstrap CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+	<style>
+		/* CSS for the stepper container */
+		#stepper {
+			display: flex;
+			align-items: center;
+		}
+
+		/* CSS for the input field inside the stepper */
+		#stepper input {
+			width: 40px;
+			text-align: center;
+		}
+
+		/* CSS for the buttons inside the stepper */
+		#stepper button {
+			width: 30px;
+			height: 30px;
+		}
+
+		input.enemy-value, input.cr-value, input.party-level {
+		width: 2ch; /* Initial width based on 2 character spaces */
+		background-color: transparent;
+		border: none;
+		text-align: center;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Left empty column for padding -->
+			<div class="col-12 col-md-8 col-lg-6">
+				<!-- Center column with nine rows -->
+				<div class="text-center">
+
+				<!-- Row 1 -->
+				<!-- Title and Subtitle -->
+					<h1>CHALLENGE RATED</h1>
+					<h5>An encounter-building app by <a href="https://www.patreon.com/DragnaCarta">DragnaCarta</a>.</h2>
+					</div>
+
+				<!-- Row 2 -->
+				<!-- Party Size Input -->
+					<div class="d-flex flex-column justify-content-center mt-3">
+						<!-- Player number selection -->
+						<p class="text-center" >How many players are in your party?</p>
+						<div id="party-size-boxes" class="d-flex justify-content-center">
+							<button class="btn btn-outline-secondary party-size">1</button>
+							<button class="btn btn-outline-secondary party-size">2</button>
+							<button class="btn btn-outline-secondary party-size">3</button>
+							<button class="btn btn-outline-secondary party-size">4</button>
+							<button class="btn btn-outline-secondary party-size">5</button>
+							<button class="btn btn-outline-secondary party-size">6</button>
+						</div>
+					</div>
+
+				<!-- Row 3 -->
+				<!-- Party Level Input -->
+
+					<div class="d-flex flex-column justify-content-center mt-3">
+						<!-- Party level input -->
+						<p class="text-center">What level are your players?</p>
+						<div id="stepper" class="d-flex justify-content-center">
+							<button id="down" onclick="down()">-</button>
+							<input type="number" id="party-level" class="text-center party-level" name="party-level" value="1" min="1" max="20" readonly>
+							<button id="up" onclick="up()">+</button>
+						</div>
+					</div>
+
+				<!-- Row 4 -->
+				<!-- Encounter Size Input -->
+					<div class="d-flex flex-column justify-content-center mt-3">
+						<p class="text-center">How many different types of enemies are your players facing?</p>
+						<div id="encounter-size-boxes" class="d-flex justify-content-center">
+							<button class="btn btn-outline-secondary encounter-size">1</button>
+							<button class="btn btn-outline-secondary encounter-size">2</button>
+							<button class="btn btn-outline-secondary encounter-size">3</button>
+							<button class="btn btn-outline-secondary encounter-size">4</button>
+							<button class="btn btn-outline-secondary encounter-size">5</button>
+							<button class="btn btn-outline-secondary encounter-size">6</button>
+						</div>
+						<div id="encounter-details"></div>
+
+						<datalist id="cr-values">
+							<option value="0">
+							<option value="1/8">
+							<option value="1/4">
+							<option value="1/2">
+							<option value="1">
+							<option value="2">
+							<option value="3">
+							<option value="4">
+							<option value="5">
+							<option value="6">
+							<option value="7">
+							<option value="8">
+							<option value="9">
+							<option value="10">
+							<option value="11">
+							<option value="12">
+							<option value="13">
+							<option value="14">
+							<option value="15">
+							<option value="16">
+							<option value="17">
+							<option value="18">
+							<option value="19">
+							<option value="20">
+							<option value="21">
+							<option value="22">
+							<option value="23">
+							<option value="24">
+							<option value="25">
+							<option value="26">
+							<option value="27">
+							<option value="28">
+							<option value="29">
+							<option value="30">
+						</datalist>
+					</div>
+
+					<!-- Placeholder rows -->
+					<div class="mt-4">
+						<p id="party-size-label" class="text-center"></p>
+						<p id="party-level-label" class="text-center"></p>
+						<p id="party-power-label" class="text-center"></p>
+						<p id="encounter-size-label" class="text-center"></p>
+						<p id="encounter-power-label" class="text-center"></p>
+						<p id="hp-lost-label" class="text-center"></p>
+					</div>
+				</div>
+				<div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Right empty column for padding -->
+			</div>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+
+		<!-- Party Size Functionality -->
+		<script>
+
+			let partySize = 1;
+
+			// jQuery function to change button color on click
+			$(document).ready(function(){
+				$(".party-size").click(function(){
+					$(".party-size").removeClass("btn-secondary").addClass("btn-outline-secondary"); // De-highlight all buttons
+					$(this).removeClass("btn-outline-secondary").addClass("btn-secondary"); // Highlight the clicked button
+					partySize = parseInt($(this).text()); // Update party size variable
+					updateEncounter();
+				});
+			});
+		</script>
+
+		<script>
+			let encounterSize = 1;
+			let crValues = [ '0', '1/8', '1/4', '1/2', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30' ];
+
+			// jQuery function to change button color on click
+			$(document).ready(function(){
+				$(".encounter-size").click(function(){
+					$(".encounter-size").removeClass("btn-secondary").addClass("btn-outline-secondary"); // De-highlight all buttons
+					$(this).removeClass("btn-outline-secondary").addClass("btn-secondary"); // Highlight the clicked button
+					encounterSize = parseInt($(this).text()); // Update encounter size variable
+
+					// Clear existing sub-rows
+					$("#encounter-details").empty();
+
+					for (let i = 0; i < encounterSize; i++) {
+						let newRow = $(`
+							<div class="d-flex align-items-center justify-content-center mt-2">
+								<div class="stepperEnemy d-flex align-items-center">
+									<button class="down btn btn-outline-secondary btn-sm" onclick="updateEnemies(this, -1)">-</button>
+									<input type="text" class="enemy-value mx-2" value="1" readonly>
+									<button class="up btn btn-outline-secondary btn-sm" onclick="updateEnemies(this, 1)">+</button>
+								</div>
+								<span class="mx-2">enemies of CR</span>
+								<div class="stepperCR d-flex align-items-center">
+									<button class="down btn btn-outline-secondary btn-sm" onclick="updateCR(this, -1)">-</button>
+									<input type="text" class="cr-value mx-2" value="0" readonly>
+									<button class="up btn btn-outline-secondary btn-sm" onclick="updateCR(this, 1)">+</button>
+								</div>
+							</div>
+						`);
+						$("#encounter-details").append(newRow);
+					}
+
+					// Add event listeners for all number inputs and cr-value inputs
+					$("#encounter-details input[type=number], .cr-value").change(updateEncounter);
+
+					updateEncounter();
+				});
+			});
+
+function updateEnemies(button, direction) {
+		let input = $(button).siblings('.enemy-value');
+		let value = parseInt(input.val());
+		value += direction;
+		if (value >= 1 && value <= 10) {
+				input.val(value);
+			input[0].dispatchEvent(new Event('input', { bubbles: true }));
+		}
+		updateEncounter();
+}
+
+function updateCR(button, direction) {
+	let input = $(button).siblings('.cr-value');
+	let index = crValues.indexOf(input.val());
+	index += direction;
+	if (index >= 0 && index < crValues.length) {
+		input.val(crValues[index]);
+		input[0].dispatchEvent(new Event('input', { bubbles: true }));
+	}
+	updateEncounter();
+}
+
+// Update the input width whenever its value changes
+$("#encounter-details").on('input', 'input.enemy-value, input.cr-value', function() {
+		let newWidth = ((this.value.length + 1) * 8);
+		this.style.width = newWidth + 'px';
+});
+
+
+
+</script>
+
+
+		<!-- Party Level Functionality -->
+		<script>
+
+			let partyLevel = 1;
+
+			// Function to increase the party level, with a max of 20
+			function up() {
+				if (partyLevel < 20) {
+					partyLevel++;
+					document.getElementById("party-level").value = partyLevel;
+					updateEncounter();
+				}
+			}
+
+			// Function to decrease the party level, with a minimum of 1
+			function down() {
+				if (partyLevel > 1) {
+					partyLevel--;
+					document.getElementById("party-level").value = partyLevel;
+					updateEncounter();
+				}
+			}
+		</script>
+
+		<!-- Encounter Calculation Functionality -->
+		<script type="text/javascript">
+			let playerPower = {
+				1: 11,
+				2: 14,
+				3: 18,
+				4: 23,
+				5: 32,
+				6: 35,
+				7: 41,
+				8: 44,
+				9: 49,
+				10: 53,
+				11: 62,
+				12: 68,
+				13: 71,
+				14: 74,
+				15: 82,
+				16: 84,
+				17: 103,
+				18: 119,
+				19: 131,
+				20: 141
+			};
+
+			let powerByCR = {
+				"0": 1,
+				"1/8": 5,
+				"1/4": 10,
+				"1/2": 16,
+				"1": 22,
+				"2": 28,
+				"3": 37,
+				"4": 48,
+				"5": 60,
+				"6": 65,
+				"7": 70,
+				"8": 85,
+				"9": 85,
+				"10": 95,
+				"11": 105,
+				"12": 115,
+				"13": 120,
+				"14": 125,
+				"15": 130,
+				"16": 140,
+				"17": 150,
+				"18": 160,
+				"19": 165,
+				"20": 180,
+				"21": 200,
+				"22": 225,
+				"23": 250,
+				"24": 275,
+				"25": 300,
+				"26": 325,
+				"27": 350,
+				"28": 375,
+				"29": 400,
+				"30": 425
+			};
+
+			let partyPower = 0;
+
+			let encounterPower = 0;
+
+			function updateEncounter() {
+				encounterPower = 0;
+		
+				partyPower = partySize * playerPower[partyLevel];
+				$("#party-size-label").text(`There are ${partySize} players in the party.`);
+				$("#party-level-label").text(`The party is level ${partyLevel}`);
+				$("#party-power-label").text(`The party power is ${partyPower}`);
+		
+				let enemyCount = 0;
+		
+				$("#encounter-details > div").each(function() {
+						let enemies = $(this).find('.enemy-value').val();
+						enemyCount += 1 // parseInt(enemies); // Keep track of the total number of enemies
+						let cr = $(this).find('.cr-value').val();
+						enemyPower = powerByCR[cr];
+
+						let powerDecayFactor = 1;
+						let powerRatio = enemyPower / (playerPower[partyLevel]);
+
+						let ratioValues = [5, 2.5, 1.5, 1, 0.8, 0.4, 0.2];
+						powerRatio = ratioValues.reduce(function(prev, curr) {
+  						return (Math.abs(curr - powerRatio) < Math.abs(prev - powerRatio) ? curr : prev);
+						});
+
+						if (powerRatio == 5) {
+							powerDecayFactor = 1.67;
+						} else if (powerRatio == 2.5) {
+							powerDecayFactor = 1.33;
+						} else if (powerRatio == 1.5) {
+							powerDecayFactor = 1.25;
+						} else if (powerRatio == 1) {
+							powerDecayFactor = 1;
+						} else if (powerRatio == 0.67) {
+							powerDecayFactor = 0.8;
+						} else if (powerRatio == 0.4) {
+							powerDecayFactor = 0.67;
+						} else {
+							powerDecayFactor = 0.5;
+						};
+
+						enemyPower = enemyPower * powerDecayFactor;
+
+						encounterPower += enemies * Math.round(enemyPower);
+				});
+		
+				$("#encounter-size-label").text(`The encounter includes ${enemyCount} different types of enemies.`);
+				$("#encounter-power-label").text(`The encounter power is ${encounterPower}`);
+
+				hpLost = Math.round(100 * Math.pow(encounterPower/partyPower, 2));
+				let resourcesSpent = Math.round(0.67 * hpLost);
+				$("#hp-lost-label").text(`The players will lose ${hpLost}% of their hit points and spend ${resourcesSpent}% of their daily resources.`);
+		};
+
+		</script>
+
+		<!-- Bootstrap and jQuery CDN links -->
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</body>
+	</html>
