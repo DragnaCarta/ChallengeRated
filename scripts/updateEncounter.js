@@ -119,9 +119,5 @@ function updateEncounter() {
 						$("#hp-lost-label").text(`The players will lose ${hpLost}% of their hit points and spend ${resourcesSpent}% of their daily resources.`);
 					};
 
-					</script>
-
-					<!-- Bootstrap and jQuery CDN links -->
-					<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-					<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+					
 
