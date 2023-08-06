@@ -1,5 +1,11 @@
 // <!-- Encounter Calculation Functionality -->
 
+// Global array to hold active CRs
+let activeCRs = [];
+
+// Global object to store enemy counts
+let enemyCounts = {};
+
 let playerPower = {
 	1: 11,
 	2: 14,
@@ -61,63 +67,108 @@ let powerByCR = {
 };
 
 let partyPower = 0;
-
 let encounterPower = 0;
 
 function updateEncounter() {
-	encounterPower = 0;
 
+	let warning = false;
+	encounterPower = 0;
 	partyPower = partySize * playerPower[partyLevel];
+
 	$("#party-size-label").text(`There are ${partySize} players in the party.`);
 	$("#party-level-label").text(`The party is level ${partyLevel}`);
 	$("#party-power-label").text(`The party power is ${partyPower}`);
 
 	let enemyCount = 0;
 
-	$("#encounter-details > div").each(function() {
-		let enemies = $(this).find('.enemy-value').val();
-						enemyCount += 1 // parseInt(enemies); // Keep track of the total number of enemies
-						let cr = $(this).find('.cr-value').val();
-						enemyPower = powerByCR[cr];
+	activeCRs.forEach(function(value) {
+		let enemies = enemyCounts[value]; // Retrieve the enemy count for this CR from the enemyCounts object
+		enemyCount ++; // Keep track of the total number of enemies
+		let cr = value; // CR value is taken directly from the activeCRs array
+		cr = cr.replace(/-/g, "/");
+		let enemyPower = powerByCR[cr];
 
-						let powerDecayFactor = 1;
-						let powerRatio = enemyPower / (playerPower[partyLevel]);
+		let powerDecayFactor = 1;
+		let powerRatio = enemyPower / (playerPower[partyLevel]);
 
-						let ratioValues = [5, 2.5, 1.5, 1, 0.67, 0.4, 0.2];
-						powerRatio = ratioValues.reduce(function(prev, curr) {
-							return (Math.abs(curr - powerRatio) < Math.abs(prev - powerRatio) ? curr : prev);
-						});
+		if (powerRatio >= 2.5) { 
+			warning = true;	
+		};
 
-						if (powerRatio == 5) {
-							powerDecayFactor = 1.67;
-						} else if (powerRatio == 2.5) {
-							powerDecayFactor = 1.33;
-						} else if (powerRatio == 1.5) {
-							powerDecayFactor = 1.25;
-						} else if (powerRatio == 1) {
-							powerDecayFactor = 1;
-						} else if (powerRatio == 0.67) {
-							powerDecayFactor = 0.8;
-						} else if (powerRatio == 0.4) {
-							powerDecayFactor = 0.67;
-						} else if (powerRatio == 0.2) {
-							powerDecayFactor = 0.5;
-						} else {
-							powerDecayFactor = 0
-						};
+		let ratioValues = [5, 2.5, 1.5, 1, 0.67, 0.4, 0.2];
+		powerRatio = ratioValues.reduce(function(prev, curr) {
+			return (Math.abs(curr - powerRatio) < Math.abs(prev - powerRatio) ? curr : prev);
+		});
 
-						enemyPower = enemyPower * powerDecayFactor;
+		if (powerRatio == 5) {
+			powerDecayFactor = 1.67;
+		} else if (powerRatio == 2.5) {
+			powerDecayFactor = 1.33;
+		} else if (powerRatio == 1.5) {
+			powerDecayFactor = 1.25;
+		} else if (powerRatio == 1) {
+			powerDecayFactor = 1;
+		} else if (powerRatio == 0.67) {
+			powerDecayFactor = 0.8;
+		} else if (powerRatio == 0.4) {
+			powerDecayFactor = 0.67;
+		} else if (powerRatio == 0.2) {
+			powerDecayFactor = 0.5;
+		} else {
+			powerDecayFactor = 0
+		};
 
-						encounterPower += enemies * Math.round(enemyPower);
-					});
+		enemyPower = enemyPower * powerDecayFactor;
 
-						$("#encounter-size-label").text(`The encounter includes ${enemyCount} different types of enemies.`);
-						$("#encounter-power-label").text(`The encounter power is ${encounterPower}`);
+		encounterPower += enemies * Math.round(enemyPower);
 
-						hpLost = Math.round(100 * Math.pow(encounterPower/partyPower, 2));
-						let resourcesSpent = Math.round(0.67 * hpLost);
-						$("#hp-lost-label").text(`The players will lose ${hpLost}% of their hit points and spend ${resourcesSpent}% of their daily resources.`);
-					};
+	});
+
+	if (warning == true) {
+		$("#warning-label").text('WARNING: This encounter contains one or more enemies sufficiently powerful to KO one or more players on a single turn. (This power level is accounted for in the encounter math.)');
+	} else {
+		$("#warning-label").text('');
+	};
+
+	$("#encounter-size-label").text(`The encounter includes ${enemyCount} different types of enemies.`);
+	$("#encounter-power-label").text(`The encounter power is ${encounterPower}`);
+
+	hpLost = Math.round(100 * Math.pow(encounterPower/partyPower, 2));
+	let resourcesSpent = Math.round(0.67 * hpLost);
+
+	let encounterDifficulty = "";
+
+	if (hpLost <= 20) {
+		encounterDifficulty = "Mild";
+	} else if (hpLost <= 40) {
+		encounterDifficulty = "Bruising";
+	} else if (hpLost <= 60) {
+		encounterDifficulty = "Bloody";
+	} else if (hpLost <= 80) {
+		encounterDifficulty = "Brutal";
+	} else if (hpLost <= 100) {
+		encounterDifficulty = "Oppressive";
+	} else if (hpLost <= 130) {
+		encounterDifficulty = "Overwhelming";
+	} else if (hpLost <= 170) {
+		encounterDifficulty = "Crushing";
+	} else if (hpLost <= 250) {
+		encounterDifficulty = "Devastating";
+	} else {
+		encounterDifficulty = "Impossible";
+	}
+
+	let difficultyText = "";
+	if (activeCRs.length) {
+		difficultyText = 'This is a';
+		if (/^[aeiou]/i.test(encounterDifficulty)) {
+			difficultyText += "n";
+		};
+		difficultyText += (' ' + `${encounterDifficulty}`.bold() + ' encounter. ');
+	};
+
+	$("#hp-lost-label").html(`${difficultyText}The players will lose ${hpLost}% of their hit points and spend ${resourcesSpent}% of their daily resources.`);
+};
 
 					
 

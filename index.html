@@ -16,6 +16,7 @@
   <!-- Link to Bootstrap & JQuery Scripts -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
 
@@ -66,7 +67,7 @@
 				  	<button class="btn btn-outline-secondary party-size">2</button>
 				  	<button class="btn btn-outline-secondary party-size">3</button>
 				  	<button class="btn btn-outline-secondary party-size">4</button>
-				  	<button class="btn btn-outline-secondary party-size">5</button>
+				  	<button class="btn btn-secondary party-size">5</button>
 				  	<button class="btn btn-outline-secondary party-size">6</button>
 					</div>
 	
@@ -82,19 +83,18 @@
 	
 			  	<div class="d-flex justify-content-center mt-3">
 	
-					<p class="text-center">Player Level:</p>
+					<p class="text-center mr-2">Party Level:</p>
 	
 					<div class="slider-container">
-				  	<button id="down" onclick="down()">-</button>
-				  	<input type="range" min="1" max="20" value="10" class="slider party-level" id="partyLevelRange" name="party-level">
-				  	<button id="up" onclick="up()">+</button>
-				  	<p>Value: <span id="value"></span></p>
+				  		<button id="down" onclick="down()" class="btn btn-outline-secondary">-</button>
+				  		<input type="range" name="party-level" id="partyLevelRange" min="1" max="20" value="1">
+				  		<button id="up" onclick="up()" class="btn btn-outline-secondary">+</button>
+				  		<p>Value: <span id="party-level"></span></p>
 					</div>
 	
 			  	</div>
 	
 				</section>
-			  
 	
 				<!--           -->
 				<!-- Enemy CRs -->
@@ -106,7 +106,24 @@
 					<p class="text-center">Select all enemy Challenge Ratings that will be used in this encounter.</p>
 	
 					<!-- Empty CR Grid (filled by buildCRGrid.js) -->
-					<div class="row" id="crGrid"></div>
+					<div class="d-flex justify-content-center container">
+
+						<div class="row">
+							
+							<!-- Left Column for Padding -->
+							<div class="col-1 col-sm-2"></div> 
+
+							<!-- Central Column -->
+							<div class="col-10 col-sm-8">
+								<div class="row scrollable-grid mr-0" id="crGrid"></div>
+							</div>
+
+							<!-- Right Column for Padding -->
+							<div class="col-1 col-sm-2"></div>
+
+						</div>
+
+					</div>
 	
 			  	</div>
 	
@@ -117,7 +134,7 @@
 				<!--              -->
 				<section>
 	
-			  	<div class="mt-3" id="crList"></div>
+			  		<div class="mt-3" id="crList"></div>
 	
 				</section>
 	  
@@ -129,12 +146,13 @@
 				<section>
 	
 			  	<div class="mt-4">
-					<p id="party-size-label" class="text-center"></p>
+<!-- 					<p id="party-size-label" class="text-center"></p>
 					<p id="party-level-label" class="text-center"></p>
 					<p id="party-power-label" class="text-center"></p>
 					<p id="encounter-size-label" class="text-center"></p>
-					<p id="encounter-power-label" class="text-center"></p>
+					<p id="encounter-power-label" class="text-center"></p> -->
 					<p id="hp-lost-label" class="text-center"></p>
+					<p id="warning-label" class="text-center" style="color: red; font-style: italic;"></p>
 			  	</div>
 				  
 				</section>
@@ -154,8 +172,9 @@
 	<!-- Script Links -->
 	<script type="text/javascript" src="scripts/buildCRGrid.js"></script>
 	<script type="text/javascript" src="scripts/updateEncounter.js"></script>
-	<script type="text/javascript" src="scripts/updateParty.js"></script>
 	<script type="text/javascript" src="scripts/updateEnemies.js"></script>
+	<script type="text/javascript" src="scripts/updateParty.js"></script>
+	<script type="text/javascript" src="scripts/crGrid.js"></script>
 
   </body>
 </html>

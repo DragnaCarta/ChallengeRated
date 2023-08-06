@@ -29,3 +29,58 @@ input.enemy-value, input.cr-value, input.party-level {
 	background-color: #007bff; /* Bootstrap primary button color */
 	color: white;
 }
+
+/* CSS for the slider */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS by the browser */
+    width: 100%; /* Full-width */
+    height: 15px; /* Specifying height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover and active states) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* CSS for the slider thumb (the draggable part) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* CSS for the deselected state */
+.btn-deselected {
+	background-color: transparent;
+	color: inherit; /* Inherit the color from the parent element */
+	border-color: inherit; /* Inherit the border color from the parent element */
+}
+
+/* CSS for the selected state */
+.btn-selected {
+	background-color: lightgrey;
+	color: inherit; /* Inherit the color from the parent element */
+	border-color: inherit; /* Inherit the border color from the parent element */
+}
+
+/* CSS for hover state */
+.btn-deselected:hover,
+.btn-selected:hover {
+	background-color: grey;
+	color: inherit; /* Inherit the color from the parent element */
+	border-color: inherit; /* Inherit the border color from the parent element */
+}
+
+
+
+
