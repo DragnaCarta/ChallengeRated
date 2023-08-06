@@ -44,10 +44,10 @@ function renderCRList() {
 // Function to create a single CR div
 function createCRDiv(value) {
 	// Create a new div with id 'cr' + value and class 'mb-3'
-	let div = $('<div>').attr('id', 'cr' + value).addClass('mb-3');
+	let div = $('<div>').attr('id', 'cr' + value).addClass('mb-3 d-flex flex-nowrap align-items-center');
 
 	// Create a new label with text 'CR ' + value + ': '
-	let label = $('<label class="mr-1">');
+	let label = $('<label class="mr-1">').css({'white-space': 'nowrap'});
 	label.append($('<strong>').text('CR ' + value.replace(/-/g, "/") + ': '));
 
 	// Create an "enemy" text label
@@ -87,7 +87,10 @@ function createCRDiv(value) {
 	});
 
 	// Create a span to display the slider's value, initially set to '1'
-	let sliderValue = $('<span>').attr('id', 'value' + value).text(enemyCounts[value]);
+	let sliderValue = $('<span>').attr('id', 'value' + value).text(enemyCounts[value]).css({
+    	'margin-top': 0,
+    	'padding-top': 0
+	});;
 
 
 	// Create trash icon button
@@ -98,8 +101,12 @@ function createCRDiv(value) {
 			$('#cr' + value.replace("/", "-") + 'toggle').removeClass('btn-selected');
 		});
 
-	// Append the label, slider value text, 'enemies' text, and buttons to the div
-	div.append(label, sliderValue, enemyLabel, decrementButton, slider, incrementButton, trashButton);
+	enemyLabel.text(enemyCounts[value] > 1 ? "enemies" : "enemy");
+	console.log($('#enemyLabel' + value).length);
+
+	let textColumn = $('<div>').addClass('col-md-3 col-4 d-flex ').append(label, sliderValue, enemyLabel);
+	let sliderColumn = $('<div>').addClass('col-md-9 col-8 d-flex').append(decrementButton, slider, incrementButton, trashButton);
+	div.append(textColumn, sliderColumn);
 
 	return div;
 }

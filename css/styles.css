@@ -74,12 +74,15 @@ input.enemy-value, input.cr-value, input.party-level {
 }
 
 /* CSS for hover state */
-.btn-deselected:hover,
-.btn-selected:hover {
-	background-color: grey;
-	color: inherit; /* Inherit the color from the parent element */
-	border-color: inherit; /* Inherit the border color from the parent element */
+@media (min-width: 1200px) {
+	.btn-deselected:hover,
+	.btn-selected:hover {
+		background-color: grey;
+		color: inherit; /* Inherit the color from the parent element */
+		border-color: inherit; /* Inherit the border color from the parent element */
+	}
 }
+
 
 
 
