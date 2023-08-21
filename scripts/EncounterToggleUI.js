@@ -14,6 +14,7 @@ class EncounterToggleUI {
 		label.textContent = text;
 		label.className = `badge badge-pill ${initialClass} text-white`;
 		label.style.padding = '8px 15px';
+		label.style.whiteSpace = 'nowrap';
 		return label;
 	}
 
@@ -46,11 +47,17 @@ class EncounterToggleUI {
 
 		const enemiesLabel = this.createLabel('Selecting Enemies', 'badge-danger');
 		enemiesLabel.style.marginRight = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
-		enemiesLabel.style.width = "100%";
+		enemiesLabel.addEventListener('click', () => {
+			input.checked = false;
+			input.dispatchEvent(new Event('change'));
+		});
 
 		const alliesLabel = this.createLabel('Selecting Allies', 'badge-secondary');
 		alliesLabel.style.marginLeft = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
-		alliesLabel.style.width = "100%";
+		alliesLabel.addEventListener('click', () => {
+			input.checked = true;
+			input.dispatchEvent(new Event('change'));
+		});
 
 		const { input, switchWrapper } = this.createSwitch();
 

@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge Rated — Build Better Encounters</title>
 
+    <!-- Meta Description -->
+    <meta name="description" content="Challenge Rated: An encounter-building tool for Dungeons & Dragons 5th Edition by DragnaCarta. Build perfectly calibrated and balanced combat encounters for your D&D campaigns.">
+    
+    <!-- Meta Keywords -->
+    <meta name="keywords" content="D&D, Dungeons & Dragons, encounter building, DragnaCarta, Challenge Rated, 5th edition, 5e">
+    
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://dragnacarta.github.io/ChallengeRated">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Challenge Rated — Build Better Encounters">
+    <meta property="og:description" content="An encounter-building tool for D&D 5th edition by DragnaCarta.">
+    <meta property="og:image" content="https://dragnacarta.github.io/ChallengeRated/icons/logo.png">
+    <meta property="og:url" content="https://dragnacarta.github.io/ChallengeRated/">
+
+    <!-- Twitter Card Tags (Optional) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Challenge Rated — Build Better Encounters">
+    <meta name="twitter:description" content="An encounter-building tool for D&D 5th edition by DragnaCarta.">
+    <meta name="twitter:image" content="https://dragnacarta.github.io/ChallengeRated/icons/logo.png">
+
+    <title>Challenge Rated — Build Better Encounters</title>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -15,101 +36,95 @@
     <!-- Custom CSS (if any) -->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 
-    <!-- Imported Fontes -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bevan&display=swap" rel="stylesheet">
+    <!-- Imported Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+Double+Pica&display=swap" rel="stylesheet">
 
     <link rel="icon" href="icons/favicon.png" type="image/png">
 
 </head>
 
-<body>
-    
-        <div class="container">
+<body class="bg-light">
 
-            <div class="row">
-                
-                <div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Left empty column for padding -->
+    <div class="header-bg text-center">
+        <span style="display: inline-block; vertical-align: middle;">
+            <img src="icons/logo.png" alt="logo" style="height: 3em;">
+        </span>
+        <span style="display: inline-block; vertical-align: middle;">
+        <h1 style="font-family: 'Montserrat', sans-serif; margin:0.2em;">Challenge Rated</h1>
+        </span>
 
-                <div class="col-12 col-md-8 col-lg-6">
+        <h5>An encounter-building tool for D&D 5th edition</h5>
+        <h6>By <a href="https://www.patreon.com/DragnaCarta">DragnaCarta</a></h6>
+    </div>
 
-                    <div class="text-center mb-3 mt-3">
-                        <span style="display: inline-block; vertical-align: middle;">
-                            <img src="icons/logo.png" alt="logo" style="height: 3em;">
-                        </span>
-                        <span style="display: inline-block; vertical-align: middle;">
-                            <h1 style="font-family: 'Montserrat', sans-serif; margin:0.2em;">Challenge Rated</h1>
-                        </span>
+    <div class="container-fluid">
 
-                        <h5>An encounter-building tool for D&D 5th edition</h5>
-                        <h6>By <a href="https://www.patreon.com/DragnaCarta">DragnaCarta</a></h6>
-                    </div>
-
-                    <div style="border-top: solid black 2px; border-radius: 10px;"></div>
-
-                    <!-- Container for Party Size Buttons -->
-                    <div class="d-flex flex-column justify-content-center mt-3 mb-3">
-                        <h6 class="text-center mb-3">Party Size</h6>
-                        <div id="party-size-buttons" class="mb-3 d-flex justify-content-center"></div>
-                    </div>
+        <div class="row">
             
-                    <!-- Container for Party Level Slider -->
-                    <div class="d-flex flex-column justify-content-center mt-2 mb-2">
-                        <h6 class="text-center mb-3">Party Level</h6>
-                        <div id="party-level-slider" class="mb-4 d-flex justify-content-center" style="margin: 0px; width: 100%;"></div>
-                    </div>
+            <div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Left empty column for padding -->
 
-                    <!-- Container for Encounter Builder -->
-                    <div class="d-flex flex-column justify-content-center mt-3 mb-4">
-                        <h5 class="text-center mb-3">Encounter Builder</h5>
+            <div class="col-12 col-md-8 col-lg-6">
 
-                        <div class="text-center mb-1 mt-1">
-                            <h6>Select the Challenge Ratings of all creatures that will fight in this encounter.</h6>
+                <!-- <br/> -->
+
+                <div class="card my-4" style="border-radius: 20px;">
+                    <div class="card-body">
+                        <h4 class="text-center mt-3">Build Your Party</h4>
+
+                        <!-- Container for Party Size Buttons -->
+                        <div class="d-flex flex-column justify-content-center mt-3 mb-3">
+                            <h6 class="text-center mb-3">Party Size</h6>
+                            <div id="party-size-buttons" class="mb-3 d-flex justify-content-center"></div>
                         </div>
-
-                        <!-- Container for Enemies/Allies Toggle -->
-                        <div id="selecting-allies-toggle" class="mb-4 mt-3"></div>
-
-                        <!-- Container for Enemy Buttons -->
-                        <div id="enemy-buttons" class="mb-3"></div>
-            
-                        <!-- Container for Enemy Sliders -->
-                        <div id="enemy-sliders" class="mb-3"></div>
-            
-                        <!-- Container for Ally Buttons -->
-                        <div id="ally-buttons" class="mb-3"></div>
-            
-                        <!-- Container for Ally Sliders -->
-                        <div id="ally-sliders" class="mb-3"></div>
-            
-                        <!-- Container for Encounter Labels -->
-                        <div id="encounter-labels" class="mb-3"></div>
+                
+                        <!-- Container for Party Level Slider -->
+                        <div class="d-flex flex-column justify-content-center mt-2 mb-2">
+                            <h6 class="text-center mb-1">Party Level</h6>
+                            <div id="party-level-slider" class="mb-1 d-flex justify-content-center" style="margin: 0px; width: 100%;"></div>
+                        </div>
+        
+                        <div class="mb-4" style="border: none; border-top: 2px solid black;"></div>
+        
+                        <!-- Container for Encounter Builder -->
+                        <div class="d-flex flex-column justify-content-center mt-4 mb-4">
+                            <h4 class="text-center mb-3">Build Your Encounter</h4>
+        
+                            <div class="text-center mb-1 mt-1">
+                                <h6>Select the Challenge Ratings of all creatures that will fight in this encounter.</h6>
+                            </div>
+        
+                            <!-- Container for Enemies/Allies Toggle -->
+                            <div id="selecting-allies-toggle" class="mb-4 mt-3"></div>
+        
+                            <!-- Container for Enemy Buttons -->
+                            <div id="enemy-buttons" class="mb-3"></div>
+                
+                            <!-- Container for Enemy Sliders -->
+                            <div id="enemy-sliders" class="mb-3"></div>
+                
+                            <!-- Container for Ally Buttons -->
+                            <div id="ally-buttons" class="mb-3"></div>
+                
+                            <!-- Container for Ally Sliders -->
+                            <div id="ally-sliders" class="mb-3"></div>
+                
+                            <!-- Container for Encounter Labels -->
+                            <div id="encounter-labels" class="mb-3"></div>
+                        </div>
                     </div>
-
-                    
-            
-                    
                 </div>
 
-                <div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Right empty column for padding -->
+                <!-- <br/> -->
 
             </div>
 
+            <div class="d-none d-md-block col-md-2 col-lg-3"></div> <!-- Right empty column for padding -->
 
-            
-        </div>    
-
-
-    </div>
-
-    
+        </div>
 
 
+        
+    </div>    
 
     <!-- JavaScript files -->
     <!-- Bootstrap JS, Popper.js -->

@@ -1,3 +1,29 @@
+/* index.html */
+
+.body-bg {
+    background-color: bg-light;
+}
+
+.header-bg {
+    background-color: #2B2B2B;
+    color: #ffffff;
+    padding: 20px 0;
+}
+
+.padding-bg {
+    background-color: #F0F0D0; 
+}
+
+.header-bg a {
+    color: #FFD700;
+    text-decoration: none;
+}
+
+.header-bg a:hover {
+    color: #DAA520;
+    text-decoration: none;
+}
+
 /* PartyUI.js */
 .pointer-with-triangle::after {
     content: '';

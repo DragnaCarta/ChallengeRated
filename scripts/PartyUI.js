@@ -49,7 +49,7 @@ class PartyLevelUI {
 		this.sliderElement = this.initializePartyLevelSlider();
 	}
 
-	createButton(textContent, onClick) {
+	createButton(iconClass, onClick) {
 		const button = document.createElement('button');
 		button.className = 'btn';
 		button.style.width = "100%";
@@ -59,11 +59,15 @@ class PartyLevelUI {
 		button.style.outline = 'none';
 		button.style.boxShadow = 'none';
 		button.style.padding = '0';
-		button.style.textShadow = '1px 1px 2px rgba(0, 0, 0, 0.5)';
+		// button.style.textShadow = '1px 1px 2px rgba(0, 0, 0, 0.5)';
 		button.style.border = '0px';
 		button.style.fontSize = '40px';
 		button.style.fontWeight = 'bold';
-		button.textContent = textContent;
+
+		const icon = document.createElement('i');
+		icon.className = iconClass;
+
+		button.appendChild(icon);
 		button.addEventListener('click', onClick);
 		return button;
 	}
@@ -124,8 +128,8 @@ class PartyLevelUI {
 			tickmarks.appendChild(option);
 		}
 
-		const decrementButton = this.createButton('-', this.decrementSlider.bind(this));
-		const incrementButton = this.createButton('+', this.incrementSlider.bind(this));
+		const decrementButton = this.createButton('fas fa-minus', this.decrementSlider.bind(this));
+		const incrementButton = this.createButton('fas fa-plus', this.incrementSlider.bind(this));
 
 		const row = createBootstrapRow([
 			[decrementButton, 2],
