@@ -6,15 +6,41 @@ class EncounterToggleUI {
 		this.encounterManager = encounterManager;
 		this.encounterUI = encounterUI;
 		this.toggleContainer = document.getElementById('selecting-allies-toggle'); // Container for toggle
+		this.addResponsiveStyles();
 		this.initializeToggleSwitch(); // Initialize the toggle switch between adding enemies and adding allies.
+	}
+
+	addResponsiveStyles() {
+		const style = document.createElement('style');
+		style.type = 'text/css';
+		style.innerHTML = `
+			@media (max-width: 768px) {
+				.responsive-badge {
+					font-size: 14px;
+					padding: 6px 10px;
+				}
+				.responsive-switch {
+					transform: scale(1.5);
+				}
+
+			}
+			@media (min-width: 769px) {
+				.responsive-badge {
+					font-size: 18px;
+					padding: 8px 15px;
+				}
+				.responsive-switch {
+					transform: scale(2);
+				}
+			}
+		`;
+		document.getElementsByTagName('head')[0].appendChild(style);
 	}
 
 	createLabel(text, initialClass) {
 		const label = document.createElement('span');
 		label.textContent = text;
-		label.className = `badge badge-pill ${initialClass} text-white`;
-		label.style.padding = '8px 15px';
-		label.style.whiteSpace = 'nowrap';
+		label.className = `badge badge-pill ${initialClass} text-white responsive-badge`;
 		return label;
 	}
 
@@ -27,13 +53,9 @@ class EncounterToggleUI {
 		const label = document.createElement('label');
 		label.className = 'custom-control-label my-auto';
 		label.setAttribute('for', 'toggleSwitch');
-		label.style.height = '24px';
 
 		const switchWrapper = document.createElement('div');
-		switchWrapper.className = 'custom-control custom-switch mx-2';
-		switchWrapper.style.transform = 'scale(2)';
-		switchWrapper.style.display = 'flex';
-		switchWrapper.style.alignItems = 'center';
+		switchWrapper.className = 'custom-control custom-switch mx-2 responsive-switch';
 		switchWrapper.appendChild(input);
 		switchWrapper.appendChild(label);
 
@@ -43,7 +65,6 @@ class EncounterToggleUI {
 	initializeToggleSwitch() {
 		const toggleContainer = document.createElement('div');
 		toggleContainer.className = 'd-flex justify-content-center';
-		toggleContainer.style.fontSize = '18px';
 
 		const enemiesLabel = this.createLabel('Selecting Enemies', 'badge-danger');
 		enemiesLabel.style.marginRight = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
@@ -76,7 +97,6 @@ class EncounterToggleUI {
 			[null, 1]
 		], true);
 
-		// toggleContainer.append(enemiesLabel, switchWrapper, alliesLabel);
 		toggleContainer.appendChild(row);
 		this.toggleContainer.appendChild(toggleContainer);
 

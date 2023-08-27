@@ -213,6 +213,28 @@ class CRSliderUI {
 		return button;
 	}
 
+	createIconButton(iconClass, onClick) {
+		const button = document.createElement('button');
+		button.className = 'btn';
+		button.style.width = "100%";
+		button.style.borderRadius = '70px';
+		button.style.backgroundColor = 'transparent';
+		button.style.color = 'black';
+		button.style.outline = 'none';
+		button.style.boxShadow = 'none';
+		button.style.padding = '0';
+		button.style.border = '0px';
+		button.style.fontSize = '30px';
+		button.style.fontWeight = 'bold';
+
+		const icon = document.createElement('i');
+		icon.className = iconClass;
+
+		button.appendChild(icon);
+		button.addEventListener('click', onClick);
+		return button;
+	}
+
 	createContainer(CR, isSelectingAllies) {
 		const container = document.createElement('div');
 		container.className = 'slider-container justify-content-center';
@@ -221,8 +243,8 @@ class CRSliderUI {
 		this.label = document.createElement('span'); // Assign the new label to this.label
 		this.updateLabel(); // Set initial text content
 
-		const decrementButton = this.createButton('-', this.decrementSlider.bind(this))
-		const incrementButton = this.createButton('+', this.incrementSlider.bind(this))
+		const decrementButton = this.createIconButton('fas fa-minus', this.decrementSlider.bind(this))
+		const incrementButton = this.createIconButton('fas fa-plus', this.incrementSlider.bind(this))
 		const deleteButton = this.createButton('🗑️', () => {
 			this.sliderElement.value = 1;
 			this.onSliderDeleted();

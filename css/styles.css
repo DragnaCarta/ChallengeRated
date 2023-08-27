@@ -24,6 +24,14 @@
     text-decoration: none;
 }
 
+.widget-header {
+    background-color: #2B2B2B;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
 /* PartyUI.js */
 .pointer-with-triangle::after {
     content: '';
@@ -37,6 +45,8 @@
     border-right: 5px solid transparent;
     border-top: 8px solid #28a745; // Create the triangle
 }
+
+
 
 /* EncounterUI.js */
 /* Define a class for the red state */

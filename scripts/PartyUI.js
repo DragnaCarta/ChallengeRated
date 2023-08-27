@@ -49,20 +49,19 @@ class PartyLevelUI {
 		this.sliderElement = this.initializePartyLevelSlider();
 	}
 
-	createButton(iconClass, onClick) {
+	createButton(iconClass, onClick, isLeft=false) {
 		const button = document.createElement('button');
-		button.className = 'btn';
+		button.className = 'btn btn-outline-secondary';
 		button.style.width = "100%";
-		button.style.borderRadius = '70px';
-		button.style.backgroundColor = 'transparent';
-		button.style.color = 'black';
-		button.style.outline = 'none';
-		button.style.boxShadow = 'none';
-		button.style.padding = '0';
-		// button.style.textShadow = '1px 1px 2px rgba(0, 0, 0, 0.5)';
-		button.style.border = '0px';
-		button.style.fontSize = '40px';
-		button.style.fontWeight = 'bold';
+		button.style.height = "50px";
+		button.style.borderRadius = isLeft ? '50px 0 0 50px' : '0 50px 50px 0'; 
+		button.style.backgroundColor = '#6c757d';
+		button.style.color = 'white';
+		button.style.fontSize = '20px';
+		button.fontWeight = 'bold';
+		button.style.display = 'flex';
+		button.style.alignItems = 'center';
+		button.style.justifyContent = 'center';
 
 		const icon = document.createElement('i');
 		icon.className = iconClass;
@@ -85,12 +84,16 @@ class PartyLevelUI {
 		slider.max = 20;
 		slider.step = 1;
 		slider.value = 1;
-		slider.style.marginTop = '48px';
+		slider.style.marginTop = '13px';
 		slider.setAttribute('list', 'tickmarks');
 
 		const sliderWrapper = document.createElement('div');
+		sliderWrapper.style.height = '50px';
+
 		sliderWrapper.style.position = 'relative';
-		sliderWrapper.style.width = '95%';
+		sliderWrapper.style.alignItems = 'center';
+		sliderWrapper.style.justifyContent = 'center';
+		sliderWrapper.style.width = '100%';
 
 		const pointer = document.createElement('div');
 		pointer.textContent = `Level ${slider.value}`;
@@ -118,6 +121,9 @@ class PartyLevelUI {
 			pointer.textContent = `Level ${slider.value}`;
 			pointer.style.left = `calc(${(slider.value - 1) * 5}% + 2px)`;
 			this.encounterManager.setPartyLevel(slider.value);
+			const percentage = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+			slider.style.setProperty('--slider-percentage', `${percentage}%`);
+			slider.style.background = `linear-gradient(to right, rgb(40, 167, 69) ${percentage}%, rgb(108, 117, 125) ${percentage}%)`;
 		});
 
 		const tickmarks = document.createElement('datalist');
@@ -128,8 +134,8 @@ class PartyLevelUI {
 			tickmarks.appendChild(option);
 		}
 
-		const decrementButton = this.createButton('fas fa-minus', this.decrementSlider.bind(this));
-		const incrementButton = this.createButton('fas fa-plus', this.incrementSlider.bind(this));
+		const decrementButton = this.createButton('fas fa-minus', this.decrementSlider.bind(this), true);
+		const incrementButton = this.createButton('fas fa-plus', this.incrementSlider.bind(this), false);
 
 		const row = createBootstrapRow([
 			[decrementButton, 2],
@@ -146,6 +152,7 @@ class PartyLevelUI {
 
 		this.sliderContainer.appendChild(row);
 		this.sliderContainer.appendChild(tickmarks);
+		this.sliderContainer.style.margin = 'auto';
 
 		return slider;
 	}
