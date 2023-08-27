@@ -17,21 +17,32 @@ class PartySizeUI {
 	initializePartySizeButtons() {
 		const fragment = document.createDocumentFragment();
 
+		// Create a flex container
+		const flexContainer = document.createElement('div');
+		flexContainer.className = 'd-flex flex-wrap justify-content-center';
+
 		for (let i = 1; i <= 10; i++) {
 			const button = document.createElement('button');
-			button.className = 'btn btn-secondary';
-			button.style.margin = '1px';
+			button.className = 'btn btn-secondary m-1';
+			// button.style.margin = '1px';
 			button.textContent = i;
+
 			if (i === 5) { button.classList.add('btn-success'); }
+
 			button.addEventListener('click', () => {
 				this.deselectAllButtons();
 				button.classList.add('btn-success');
 				this.encounterManager.setPartySize(i);
 			});
+
 			this.buttons.push(button);
-			fragment.appendChild(button);
+			flexContainer.appendChild(button);
 		}
 
+		// Append the new row div to the fragment
+		fragment.appendChild(flexContainer);
+
+		this.buttonContainer.className = 'mb-3';
 		this.buttonContainer.appendChild(fragment);
 	}
 

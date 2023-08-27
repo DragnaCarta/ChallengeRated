@@ -25,6 +25,7 @@ function createBootstrapRow(columns, centered=false) {
 	return row
 }
 
+// Creates a slider UI element with tickmarks, increment and decrement buttons, and a visual pointer to the current value
 class SliderUI {
 	constructor({
 		containerId,

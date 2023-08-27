@@ -46,14 +46,7 @@
     border-top: 8px solid #28a745; // Create the triangle
 }
 
-
-
 /* EncounterUI.js */
-/* Define a class for the red state */
-#toggleSwitch.enemy:not(:checked) ~ .custom-control-label::before {
-    background-color: #dc3545 !important; /* Use !important to override Bootstrap styles */
-}
-
 .btn-light-blue {
     background-color: #5F7FAD ;
     color: #white; 
@@ -63,3 +56,36 @@
     background-color: #B37676 ;
     color: #white; 
 }
+
+/* EncounterToggleUI.js */
+.unselectable {
+  -webkit-user-select: none;  /* Chrome, Safari, Opera */
+  -khtml-user-select: none;   /* Konqueror */
+  -moz-user-select: none;     /* Firefox */
+  -ms-user-select: none;      /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+:root {
+  --responsive-badge-font-size: 18px;
+  --responsive-badge-padding: 8px 15px;
+  --responsive-switch-scale: 2;
+}
+
+/* Define a class for the red state */
+#toggleSwitch.enemy:not(:checked) ~ .custom-control-label::before {
+    background-color: #dc3545 !important; 
+}
+
+.responsive-badge {
+  font-size: var(--responsive-badge-font-size);
+  padding: var(--responsive-badge-padding);
+}
+.responsive-switch {
+  transform: scale(var(--responsive-switch-scale));
+}
+
