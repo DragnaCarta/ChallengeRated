@@ -3,13 +3,17 @@ class EncounterToggleUI {
 	static TOGGLE_LABEL_MARGIN = '10px';
 
 	constructor(encounterManager, encounterUI) {
+		// Initialize properties
 		this.encounterManager = encounterManager;
 		this.encounterUI = encounterUI;
 		this.toggleContainer = document.getElementById('selecting-allies-toggle'); // Container for toggle
+
+		// Add responsive styles and initialize the toggle switch between adding enemies and adding allies.
 		this.addResponsiveStyles();
-		this.initializeToggleSwitch(); // Initialize the toggle switch between adding enemies and adding allies.
+		this.initializeToggleSwitch();
 	}
 
+	// Add responsive styles to the document head
 	addResponsiveStyles() {
 		const style = document.createElement('style');
 		style.type = 'text/css';
@@ -37,6 +41,7 @@ class EncounterToggleUI {
 		document.getElementsByTagName('head')[0].appendChild(style);
 	}
 
+	// Create a label with specific text and initial class
 	createLabel(text, initialClass) {
 		const label = document.createElement('span');
 		label.textContent = text;
@@ -44,6 +49,7 @@ class EncounterToggleUI {
 		return label;
 	}
 
+	// Create the toggle switch and its wrapper.
 	createSwitch() {
 		const input = document.createElement('input');
 		input.type = 'checkbox';
@@ -62,32 +68,26 @@ class EncounterToggleUI {
 		return { input, switchWrapper };
 	}
 
+	// Initialize the toggle switch and its behavior
 	initializeToggleSwitch() {
-		const toggleContainer = document.createElement('div');
-		toggleContainer.className = 'd-flex justify-content-center';
+		// Create main toggle container
+		const toggleContainer = this.createToggleContainer();
 
+		// Create labels for enemies and allies
 		const enemiesLabel = this.createLabel('Selecting Enemies', 'badge-danger');
-		enemiesLabel.style.marginRight = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
-		enemiesLabel.addEventListener('click', () => {
-			input.checked = false;
-			input.dispatchEvent(new Event('change'));
-		});
-
 		const alliesLabel = this.createLabel('Selecting Allies', 'badge-secondary');
-		alliesLabel.style.marginLeft = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
-		alliesLabel.addEventListener('click', () => {
-			input.checked = true;
-			input.dispatchEvent(new Event('change'));
-		});
 
+		// enemiesLabel.style.marginRight = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
+		// alliesLabel.style.marginLeft = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
+
+		// Add click event listeners to labels
+		this.addLabelEventListeners(enemiesLabel, alliesLabel);
+
+		// Create the toggle switch
 		const { input, switchWrapper } = this.createSwitch();
 
-		const updateToggleSwitchClass = () => {
-			if (input.checked) { input.classList.remove('enemy'); }
-			else { input.classList.add('enemy'); }
-		}
-
-		updateToggleSwitchClass();
+		// Update and set toggle switch classes
+		this.updateToggleSwitchClass(input);
 
 		const row = createBootstrapRow([
 			[null, 1],
@@ -108,6 +108,29 @@ class EncounterToggleUI {
 			this.encounterManager.activeEncounter.toggleActiveGroup();
 			this.encounterUI.toggleGroupVisibility(input.checked);
 			updateToggleSwitchClass();
+		});
+	}
+
+	createToggleContainer() {
+		const toggleContainer = document.createElement('div');
+		toggleContainer.className = 'd-flex justify-content-center';
+		return toggleContainer;
+	}
+
+	updateToggleSwitchClass = (input) => {
+			if (input.checked) { input.classList.remove('enemy'); }
+			else { input.classList.add('enemy'); }
+	}
+
+	addLabelEventListeners(enemiesLabel, alliesLabel) {
+		enemiesLabel.addEventListener('click', () => {
+			input.checked = false;
+			input.dispatchEvent(new Event('change'));
+		});
+
+		alliesLabel.addEventListener('click', () => {
+			input.checked = true;
+			input.dispatchEvent(new Event('change'));
 		});
 	}
 
