@@ -90,12 +90,9 @@ class SliderUI {
 
 		// Create tickmarks and other elements
 		const tickmarks = this.createTickmarks();
-		const decrementButton = this.createButton('fas fa-minus', this.decrementSlider.bind(this), true);
-		const incrementButton = this.createButton('fas fa-plus', this.incrementSlider.bind(this), false);
-		const row = this.createRow(decrementButton, sliderWrapper, incrementButton);
 
 		// Add everything to the main container
-		this.sliderContainer.appendChild(row);
+		this.sliderContainer.appendChild(sliderWrapper);
 		this.sliderContainer.appendChild(tickmarks);
 		this.sliderContainer.style.margin = 'auto';
 
@@ -175,31 +172,5 @@ class SliderUI {
 			tickmarks.appendChild(option);
 		}
 		return tickmarks
-	}
-
-	createRow(decrementButton, sliderWrapper, incrementButton) {
-		const row = createBootstrapRow([
-			[decrementButton, 2],
-			[sliderWrapper, 8],
-			[incrementButton, 2],
-		], true);
-
-		row.classList.add('align-items-center')
-
-		const columns = row.querySelectorAll('.col');
-		columns.forEach(col => {
-			col.style.padding = '5px';
-		});
-		return row;
-	}
-
-	decrementSlider() {
-		this.sliderElement.value = Math.max(1, Number(this.sliderElement.value) - 1);
-		this.sliderElement.dispatchEvent(new Event('input')); // Trigger a change event
-	}
-
-	incrementSlider() {
-		this.sliderElement.value = Math.min(20, Number(this.sliderElement.value) + 1);
-		this.sliderElement.dispatchEvent(new Event('input')); // Trigger a change event
 	}
 }
