@@ -50,29 +50,6 @@ class SliderUI {
 		this.sliderElement = this.initializeSlider();
 	}
 
-	// Creates a button element
-	createButton(iconClass, onClick, isLeft=false) {
-		const button = document.createElement('button');
-		button.className = 'btn btn-outline-secondary';
-		button.style.width = "100%";
-		button.style.height = "50px";
-		button.style.borderRadius = isLeft ? '50px 0 0 50px' : '0 50px 50px 0'; 
-		button.style.backgroundColor = this.sliderColor;
-		button.style.color = 'white';
-		button.style.fontSize = '20px';
-		button.style.fontWeight = 'bold';
-		button.style.display = 'flex';
-		button.style.alignItems = 'center';
-		button.style.justifyContent = 'center';
-
-		const icon = document.createElement('i');
-		icon.className = iconClass;
-
-		button.appendChild(icon);
-		button.addEventListener('click', onClick);
-		return button;
-	}
-
 	// Initializes the slider element
 	initializeSlider() {
 		// Create slider elements
@@ -111,6 +88,7 @@ class SliderUI {
 		const slider = document.createElement('input');
 		slider.style.width = "100%";
 		slider.type = 'range';
+		slider.className = 'form-range';
 		slider.min = this.minValue;
 		slider.max = this.maxValue;
 		slider.value = this.initialValue;
@@ -156,9 +134,6 @@ class SliderUI {
 			label.textContent = `Level ${slider.value}`;
 			pointer.textContent = `Level ${slider.value}`;
 			pointer.style.left = `calc(${(slider.value - 1) * 5}% + 2px)`;
-			const percentage = (slider.value - slider.min) / (slider.max - slider.min) * 100;
-			slider.style.setProperty('--slider-percentage', `${percentage}%`);
-			slider.style.background = `linear-gradient(to right, rgb(40, 167, 69) ${percentage}%, rgb(108, 117, 125) ${percentage}%)`;
 			this.onChange(slider.value);
 		});
 	}
