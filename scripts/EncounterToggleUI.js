@@ -42,10 +42,14 @@ class EncounterToggleUI {
 		// Add click event listeners as buttons
 		enemiesButton.addEventListener('click', () => {
 			this.updateButtonGroup(false, enemiesButton, alliesButton);
+			this.encounterManager.activeEncounter.toggleActiveGroup();
+			this.encounterUI.toggleGroupVisibility(false);
 		});
 
 		alliesButton.addEventListener('click', () => {
 			this.updateButtonGroup(true, enemiesButton, alliesButton);
+			this.encounterManager.activeEncounter.toggleActiveGroup();
+			this.encounterUI.toggleGroupVisibility(true);
 		});
 	}
 
@@ -64,9 +68,6 @@ class EncounterToggleUI {
 			enemiesButton.className = 'btn btn-danger';
 			alliesButton.className = 'btn btn-secondary';
 		}
-
-		this.encounterManager.activeEncounter.toggleActiveGroup();
-		this.encounterUI.toggleGroupVisibility(selectingAllies);
 	}
 
 }

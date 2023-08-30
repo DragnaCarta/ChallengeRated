@@ -207,6 +207,8 @@ class CRSliderUI {
 	createButton(textContent, onClick) {
 		const button = document.createElement('button');
 		button.className = 'btn btn-secondary';
+		button.style.outline = 'none';
+		button.style.boxShadow = 'none';
 		button.style.width = '100%';
 		button.textContent = textContent;
 		button.addEventListener('click', onClick);
@@ -314,6 +316,8 @@ class CRButtonUI {
 		this.buttonElement.style.display = 'block';
 		this.buttonElement.style.width = '100%';
 		this.buttonElement.style.color = 'white';
+		this.buttonElement.style.outline = 'none';
+		this.buttonElement.style.boxShadow = 'none';
 		this.buttonElement.textContent = CR; // Text content of the button (e.g., "1/4")
 		this.buttonElement.addEventListener('click', onClick); // Click event listener
 		this.slider = slider;

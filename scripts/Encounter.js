@@ -35,7 +35,6 @@ class Encounter {
 
 	// Sets the number of enemies or allies of a particular CR (depending on which the user is currently adding).
 	setCR(CR, count) {
-		console.log(`Setting ${CR} to ${count}!`);
 		this.activeGroup.set(CR, count);
 		this.onEncounterChange();
 	}
