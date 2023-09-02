@@ -95,7 +95,7 @@ class PartySizeUI {
 class PartyLevelUI {
 	constructor(encounterManager) {
 		this.encounterManager = encounterManager;
-		this.sliderElement = new SliderUI({
+		this.sliderUI = new SliderUI({
 			containerId: 'party-level-slider',
 			minValue: 1,
 			maxValue: 20,
@@ -106,6 +106,9 @@ class PartyLevelUI {
 				this.encounterManager.setPartyLevel(value);
 			}
 		});
+		this.sliderElement = this.sliderUI.ui;
+		this.ui = document.getElementById('party-level-slider');
+		this.ui.appendChild(this.sliderElement);
 	}
 	
 }

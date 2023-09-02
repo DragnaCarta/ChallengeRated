@@ -28,7 +28,6 @@ function createBootstrapRow(columns, centered=false) {
 // Creates a slider UI element with tickmarks, increment and decrement buttons, and a visual pointer to the current value
 class SliderUI {
 	constructor({
-		containerId,
 		minValue = 1,
 		maxValue = 20,
 		initialValue = 1,
@@ -37,7 +36,6 @@ class SliderUI {
 		onChange = () => {},
 	}) {
 		// Initialize properties
-		this.containerId = containerId;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.initialValue = initialValue;
@@ -45,8 +43,13 @@ class SliderUI {
 		this.pointerColor = pointerColor;
 		this.onChange = onChange;
 
-		// Get container and initialize slider
-		this.sliderContainer = document.getElementById(this.containerId);
+		// Create container and initialize slider
+		this.ui = createElement('div', {
+			className: 'd-flex align-items-center',
+			style: {
+				width: '100%'
+			}
+		});
 		this.sliderElement = this.initializeSlider();
 	}
 
@@ -69,9 +72,9 @@ class SliderUI {
 		const tickmarks = this.createTickmarks();
 
 		// Add everything to the main container
-		this.sliderContainer.appendChild(sliderWrapper);
-		this.sliderContainer.appendChild(tickmarks);
-		this.sliderContainer.style.margin = 'auto';
+		this.ui.appendChild(sliderWrapper);
+		this.ui.appendChild(tickmarks);
+		this.ui.style.margin = 'auto';
 
 		return slider;
 	}
@@ -85,47 +88,58 @@ class SliderUI {
 	}
 
 	createSlider() {
-		const slider = document.createElement('input');
-		slider.style.width = "100%";
-		slider.type = 'range';
-		slider.className = 'form-range';
-		slider.min = this.minValue;
-		slider.max = this.maxValue;
-		slider.value = this.initialValue;
-		slider.step = 1;
-		slider.style.marginTop = '13px';
+		const slider = createElement('input', {
+			className: 'form-range',
+			type: 'range',
+			min: this.minValue,
+			max: this.maxValue,
+			value: this.initialValue,
+			step: 1,
+			style: {
+				width: '100%',
+				marginTop: '13px'
+			}
+		});
+
 		slider.setAttribute('list', 'tickmarks');
 		return slider;
 	}
 
 	createSliderWrapper() {
-		const sliderWrapper = document.createElement('div');
-		sliderWrapper.style.height = '50px';
-		sliderWrapper.style.position = 'relative';
-		sliderWrapper.style.alignItems = 'center';
-		sliderWrapper.style.justifyContent = 'center';
-		sliderWrapper.style.width = '100%';
+		const sliderWrapper = createElement('div', {
+			style: {
+				height: '50px',
+				position: 'relative',
+				alignItems: 'center',
+				justifyContent: 'center',
+				width: '100%'
+			}
+		});
+
 		return sliderWrapper;
 	}
 
 	createPointer(slider) {
-		const pointer = document.createElement('div');
-		pointer.textContent = `Level ${slider.value}`;
-		pointer.style.position = 'absolute';
-		pointer.style.left = `calc(${(slider.value - 1) * 5}% + 2px)`;
-		pointer.style.transform = 'translateX(-50%) translateY(-100%)';
-		pointer.style.bottom = '32px';
-		pointer.style.width = '80px';
-		pointer.style.whiteSpace = 'nowrap';
-		pointer.style.backgroundColor = this.pointerColor;
-		pointer.style.color = 'white';
-		pointer.style.padding = '3px';
-		pointer.style.borderRadius = '5px';
-		pointer.style.textAlign = 'center';
+		const pointer = createElement('div', {
+			textContent: `Level ${slider.value}`,
+			className: 'pointer-with-triangle',
+			style: {
+				position: 'absolute',
+				left: `calc(${(slider.value - 1) * 5}% + 2px)`,
+				transform: 'translateX(-50%) translateY(-100%)',
+				bottom: '32px',
+				width: '80px',
+				whiteSpace: 'nowrap',
+				backgroundColor: this.pointerColor,
+				color: 'white',
+				padding: '3px',
+				borderRadius: '5px',
+				textAlign: 'center',
+				position: 'relative',
+				boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.1)'
+			}
+		});
 
-		pointer.style.position = 'relative';
-		pointer.style.boxShadow = '0px 0px 4px rgba(0, 0, 0, 0.1)';
-		pointer.classList.add('pointer-with-triangle');
 		return pointer;
 	}
 
@@ -139,13 +153,27 @@ class SliderUI {
 	}
 
 	createTickmarks() {
-		const tickmarks = document.createElement('datalist');
-		tickmarks.id = 'tickmarks';
+		const tickmarks = createElement('datalist', {});
+
 		for (let i = 1; i <= this.maxValue; i++) {
-			const option = document.createElement('option');
-			option.value = i;
+			const option = createElement('option', {
+				value: i
+			});
+
 			tickmarks.appendChild(option);
 		}
 		return tickmarks
 	}
+}
+
+function createElement(tag, attributes) {
+	const element = document.createElement(tag);
+	for (const [key, value] of Object.entries(attributes)) {
+		if (typeof value === 'object' && key === 'style') {
+			Object.assign(element.style, value);
+		} else {
+			element[key] = value;
+		}
+	}
+	return element;
 }

@@ -184,53 +184,55 @@ class CRSliderUI {
 		this.onSliderChange = onSliderChange;
 		this.isSelectingAllies = isSelectingAllies;
 		this.onSliderDeleted = onSliderDeleted;
-		this.sliderElement = this.createSlider(CR, onSliderChange); // HTML slider element
 		this.container = this.createContainer(CR, isSelectingAllies);
+		this.sliderElement = this.createSlider(CR, onSliderChange); // HTML slider element
 	}
 
 	createSlider(CR, onSliderChange) {
-		const slider = document.createElement('input');
-		slider.style.width = '100%';
-		slider.type = 'range';
-		slider.min = CRSliderUI.MIN_SLIDER_VALUE;
-		slider.max = CRSliderUI.MAX_SLIDER_VALUE;
-		slider.step = 1;
-		slider.value = 1;
-		slider.className = 'cr-slider';
-		slider.addEventListener('input', () => {
-			onSliderChange(slider.value); // Listen for changes
-			this.updateLabel();
+		const slider = new SliderUI({
+			containerId: `${CR}-slider`,
+			maxValue: 10,
+			onChange: (event) => {
+				onSliderChange(slider.value); // Listen for changes
+			}
 		});
-		return slider;
+		return slider.sliderElement;
 	}
 
 	createButton(textContent, onClick) {
-		const button = document.createElement('button');
-		button.className = 'btn btn-secondary';
-		button.style.outline = 'none';
-		button.style.boxShadow = 'none';
-		button.style.width = '100%';
-		button.textContent = textContent;
+		const button = createElement('button', {
+			className: 'btn btn-secondary',
+			textContent: textContent,
+			style: {
+				outline: 'none',
+				boxShadow: 'none',
+				width: '100%',
+			}
+		});
 		button.addEventListener('click', onClick);
 		return button;
 	}
 
 	createIconButton(iconClass, onClick) {
-		const button = document.createElement('button');
-		button.className = 'btn';
-		button.style.width = "100%";
-		button.style.borderRadius = '70px';
-		button.style.backgroundColor = 'transparent';
-		button.style.color = 'black';
-		button.style.outline = 'none';
-		button.style.boxShadow = 'none';
-		button.style.padding = '0';
-		button.style.border = '0px';
-		button.style.fontSize = '30px';
-		button.style.fontWeight = 'bold';
-
-		const icon = document.createElement('i');
-		icon.className = iconClass;
+		const button = createElement('button', {
+			className: 'btn',
+			style: {
+				width: '100%',
+				borderRadius: '70px',
+				backgroundColor: 'transparent',
+				color: 'black',
+				outline: 'none',
+				boxShadow: 'none',
+				padding: '0',
+				border: '0px',
+				fontSize: '30px',
+				fontWeight: 'bold'
+			}
+		});
+		
+		const icon = createElement('i', {
+			className: iconClass
+		});
 
 		button.appendChild(icon);
 		button.addEventListener('click', onClick);
@@ -238,15 +240,14 @@ class CRSliderUI {
 	}
 
 	createContainer(CR, isSelectingAllies) {
-		const container = document.createElement('div');
-		container.className = 'slider-container justify-content-center';
-		container.style.display = 'none'; // Initially hidden;
+		const container = createElement('div', {
+			className: 'slider-container justify-content-center',
+			id: `${CR}-slider`,
+			style: {
+				display: 'none'
+			}
+		})
 
-		this.label = document.createElement('span'); // Assign the new label to this.label
-		this.updateLabel(); // Set initial text content
-
-		const decrementButton = this.createIconButton('fas fa-minus', this.decrementSlider.bind(this))
-		const incrementButton = this.createIconButton('fas fa-plus', this.incrementSlider.bind(this))
 		const deleteButton = this.createButton('🗑️', () => {
 			this.sliderElement.value = 1;
 			this.onSliderDeleted();
@@ -254,12 +255,10 @@ class CRSliderUI {
 		});
 
 		let row = createBootstrapRow([
-			[this.label, 4],
-			[decrementButton, 1],
-			[this.sliderElement, 4],
-			[incrementButton, 1],
+			[this.sliderElement, 10],
 			[deleteButton, 2]
 		]);
+
 		const columns = row.querySelectorAll('.col');
 		columns.forEach(col => {
 			col.style.padding = '5px';
@@ -280,20 +279,6 @@ class CRSliderUI {
 		this.onSliderChange(this.sliderElement.value);
 	}
 
-	decrementSlider() {
-		this.sliderElement.value = Math.max(CRSliderUI.MIN_SLIDER_VALUE, Number(this.sliderElement.value) - 1);
-		this.sliderElement.dispatchEvent(new Event('input')); // Trigger a change event
-	}
-
-	incrementSlider() {
-		this.sliderElement.value = Math.min(CRSliderUI.MAX_SLIDER_VALUE, Number(this.sliderElement.value) + 1);
-		this.sliderElement.dispatchEvent(new Event('input')); // Trigger a change event
-	}
-
-	updateLabel() {
-		this.label.textContent = `CR ${this.CR}: ${this.sliderElement.value} ${this.isSelectingAllies() ? 'allies' : 'enemies'}`;
-	}
-
 	showSlider() {
 		this.container.style.display = 'block';
 	}
@@ -311,14 +296,18 @@ class CRSliderUI {
 // The CRButtonUI class manages the visual appearance of a Challenge Rating (CR) button.
 class CRButtonUI {
 	constructor(CR, isAllyButton, onClick, slider, isSelectingAllies) {
-		this.buttonElement = document.createElement('button'); // HTML button element
-		this.buttonElement.className = 'btn';
-		this.buttonElement.style.display = 'block';
-		this.buttonElement.style.width = '100%';
-		this.buttonElement.style.color = 'white';
-		this.buttonElement.style.outline = 'none';
-		this.buttonElement.style.boxShadow = 'none';
-		this.buttonElement.textContent = CR; // Text content of the button (e.g., "1/4")
+		this.buttonElement = createElement('button', {
+			className: 'btn',
+			textContent: CR,
+			style: {
+				display: 'block',
+				width: '100%',
+				color: 'white',
+				outline: 'none',
+				boxShadow: 'none'
+			}
+		});
+
 		this.buttonElement.addEventListener('click', onClick); // Click event listener
 		this.slider = slider;
 		this.isAllyButton = isAllyButton;
