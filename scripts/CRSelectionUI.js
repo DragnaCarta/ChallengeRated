@@ -271,7 +271,7 @@ class CRSliderUI {
 
 	initializeSliderValue(value) {
 		this.sliderElement.value = value;
-		this.updateLabel();
+		// this.updateLabel();
 	}
 
 	setSliderValue(value) {
