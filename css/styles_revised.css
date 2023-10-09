@@ -1,1 +1,166 @@
-styles_revised.css
+/* 
+  Project: Challenge Rated
+  Author: DragnaCarta
+  Date: 09/27/2023
+  Description: Main stylesheet for the Challenge Rated project. This file contains styles for the header section, including logo, title, subtitle, and author attribution.
+*/
+
+/* === Reset === */
+/* Reset or normalize styles could go here */
+
+/* === Base Styles === */
+/* Global or base styles could go here */
+
+/* === Typography === */
+.title {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0.2em;
+}
+
+.subtitle {
+    font-size: 1.25em; /* or whatever size matches the original h5 appearance */
+    font-weight: 700; /* adjust as needed to match original appearance */
+    margin: 0; /* assuming no margin, adjust as needed */
+}
+
+.author {
+    font-size: 1em; /* or whatever size matches the original h6 appearance */
+    font-weight: 700; /* adjust as needed to match original appearance */
+    margin: 0; /* assuming no margin, adjust as needed */
+}
+
+h5.text-center {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+
+/* === Layout === */
+.header-bg {
+    text-align: center;
+    background-color: #2B2B2B;
+    color: #ffffff;
+    padding: 20px 0;
+}
+
+.logo-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-container,
+.title-container {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.party-widget-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin-bottom: 1rem;
+}
+
+
+/* === Media Queries === */
+/* Responsive styles or media queries could go here */
+
+/* === Components === */
+.logo {
+    height: 3em;
+}
+
+.party-widget-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.party-button {
+    width: 2rem;
+    padding: 0.5rem;
+    border: none;
+    background-color: #6c757d; /* Bootstrap's .btn-secondary background color */
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.party-button.btn-success {
+    background-color: #28a745; /* Bootstrap's .btn-success background color */
+}
+
+.pointer-with-triangle {
+    position: relative;
+    left: calc(0% + 2px);
+    transform: translateX(-50%) translateY(-100%);
+    bottom: 32px;
+    width: 80px;
+    white-space: nowrap;
+    background-color: rgb(40, 167, 69);
+    color: white;
+    padding: 3px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px;
+}
+
+.form-range {
+    width: 100%;
+    margin-top: 13px;
+}
+
+#enemy-buttons .btn-custom {
+    display: block;
+    width: 100%;
+    color: white;
+    outline: none;
+    box-shadow: none;
+}
+#enemy-buttons .col-custom {
+    padding: 1px;
+}
+
+
+/* === Utilities === */
+/* Utility classes for margin, padding, visibility etc could go here */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.no-outline {
+    outline: none;
+    box-shadow: none;
+}
+
+/* === Vendor Prefixes or Third-Party Styles === */
+/* Any vendor prefixes or third-party styles could go here */
