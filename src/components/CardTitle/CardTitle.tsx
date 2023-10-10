@@ -7,7 +7,7 @@ type CardTitleProps = {
 export default function CardTitle({ children }: CardTitleProps) {
   return (
     <div className={styles.container}>
-      <h2>{children}</h2>
+      {children}
     </div>
   )
 }

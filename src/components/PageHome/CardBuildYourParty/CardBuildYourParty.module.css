@@ -1,0 +1,31 @@
+.cardBody {
+    max-height: 0;
+    transition: max-height 0.75s ease-out;
+    overflow: hidden;
+  }
+  
+  .cardBody.expanded {
+    max-height: 500px;
+    transition: max-height 0.95s ease-in;
+  }
+
+  .cardTitleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    color: #FFF;
+    border: none;
+    background-color: dodgerblue;
+    cursor: pointer;
+  }
+
+  .reset:hover {
+    background-color: red;
+  }

@@ -1,31 +1,28 @@
 import React, { useState} from 'react';
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+// import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 
 import Banner from '@/components/Banner/Banner'
-import ButtonGrid from '@/components/ButtonGrid/ButtonGrid';
-import ButtonToggle from '@/components/ButtonToggle/ButtonToggle';
 import Card from '@/components/Card/Card'
 import CardTitle from '@/components/CardTitle/CardTitle';
-import ChallengeRatingOptions from '@/lib/ChallengeRatingOptions';
-import CreatureToggleOptions from '@/lib/CreatureToggleOptions';
 import Container from '@/components/Container/Container';
 import EncounterCalculator from '@/lib/EncounterCalculator';
-import RadioGrid from '@/components/RadioGrid/RadioGrid';
-import PartyLevelOptions from '@/lib/PartyLevelOptions';
-import PartySizeOptions from '@/lib/PartySizeOptions';
+import CardBuildYourParty from '@/components/PageHome/CardBuildYourParty/CardBuildYourParty';
+import CardBuildYourEncounter from '@/components/PageHome/CardBuildYourEncounter/CardBuildYourEncounter';
 
-const inter = Inter({ subsets: ['latin'] });
+
+// const inter = Inter({ subsets: ['latin'] });
 const _encounterCalculator = new EncounterCalculator();
 
 export default function Home() {
-  const [partySize, setPartySize] = useState(1);
-  const [partyAverageLevel, setPartyAverageLevel] = useState(1);
+  const [partySize, setPartySize] = useState(0);
+  const [partyAverageLevel, setPartyAverageLevel] = useState(0);
   const [creatureToggle, setCreatureToggle] = useState(0);
   const [enemies, setEnemies] = useState<number[]>([]);
   const [allies, setAllies] = useState<number[]>([]);
+
+  const isPartySelected = partySize > 0 && partyAverageLevel > 0;
 
   //
   const enemyCrOccurrences = enemies.reduce(function (acc: Record<number, number>, curr) {
@@ -56,51 +53,23 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
+      <main className={`${styles.main}`}>
         <Banner />
 
-        {/* Card 1 - Build Your Party */}
         <Container>
-          <Card>
-            <CardTitle>Build Your Party</CardTitle>
-            <div style={{ margin: '1rem' }}>
-              <RadioGrid 
-                label="Select the number of players in your party."
-                options={PartySizeOptions}
-                onChange={(value) => setPartySize(value)}
-                selectedValue={partySize}
-              />
-            </div>
-            <div style={{ margin: '1rem' }}>
-              <RadioGrid 
-                label="Select your party's average level."
-                options={PartyLevelOptions}
-                onChange={(value) => setPartyAverageLevel(value)}
-                selectedValue={partyAverageLevel}
-              />
-            </div>
-          </Card>
-
-        {/* Card 2 - Build Your Encounter */}
-        <Card>
-        <CardTitle>Build Your Encounter</CardTitle>
-        <div style={{ margin: '1rem' }}>
-            <ButtonToggle 
-              label="Are you adding allies or enemies?"
-              options={CreatureToggleOptions}
-              selectedValue={creatureToggle}
-              onClick={(value: number) => setCreatureToggle(value)}
-            />
-          </div>
-          <div style={{ margin: '1rem' }}>
-            <ButtonGrid 
-              label="Add creatures that will fight in this encounter by selecting their Challenge Ratings."
-              options={ChallengeRatingOptions}
-              onClick={(value: number) => addCreature(value)}
-              mode={creatureToggle === 0 ? 'red' : 'blue'}
-            />
-          </div>
-        </Card>
+          <CardBuildYourParty
+            isExpanded={isPartySelected}
+            partySize={partySize}
+            setPartySize={setPartySize}
+            partyAverageLevel={partyAverageLevel}
+            setPartyAverageLevel={setPartyAverageLevel}
+          />
+          
+          <CardBuildYourEncounter
+            addCreature={addCreature}
+            creatureToggle={creatureToggle}
+            setCreatureToggle={setCreatureToggle}
+          />
 
         {/* Card 3 - Encounter Summary */}
         <Card>
