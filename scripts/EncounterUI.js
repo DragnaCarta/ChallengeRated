@@ -8,9 +8,9 @@ class EncounterUI {
 
 		this.labelContainer = document.getElementById('encounter-labels');
 		this.labelContainer.append(this.partyLabel, this.enemyLabel, this.difficultyLabel);
-		
-		this.crSelectionUI = new CRSelectionUI(encounterManager, this);
+
 		this.encounterToggleUI = new EncounterToggleUI(encounterManager, this);
+		this.crSelectionUI = new CRSelectionUI(encounterManager, this);
 	}
 
 	toggleGroupVisibility(isAlliesSelected) {

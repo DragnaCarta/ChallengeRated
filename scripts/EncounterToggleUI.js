@@ -1,73 +1,87 @@
 class EncounterToggleUI {
 	
+	static TOGGLE_LABEL_MARGIN = '10px';
+
 	constructor(encounterManager, encounterUI) {
-		// Initialize properties
 		this.encounterManager = encounterManager;
 		this.encounterUI = encounterUI;
 		this.toggleContainer = document.getElementById('selecting-allies-toggle'); // Container for toggle
-
-		// Initialize the button group
-		this.initializeBtnGroup();
+		this.initializeToggleSwitch(); // Initialize the toggle switch between adding enemies and adding allies.
 	}
 
-	createButton(text, initialClass) {
-		const button = document.createElement('button');
-		button.textContent = text;
-		button.className = `btn ${initialClass}`;
-		button.style.outline = 'none';
-		button.style.boxShadow = 'none';
-		return button;
+	createLabel(text, initialClass) {
+		const label = document.createElement('span');
+		label.textContent = text;
+		label.className = `badge badge-pill ${initialClass} text-white`;
+		label.style.padding = '8px 15px';
+		return label;
 	}
 
-	initializeBtnGroup() {
-		// Create main toggle container
-		const toggleContainer = this.createToggleContainer();
+	createSwitch() {
+		const input = document.createElement('input');
+		input.type = 'checkbox';
+		input.className = 'custom-control-input';
+		input.id = 'toggleSwitch';
 
-		// Create buttons for enemies and allies
-		const enemiesButton = this.createButton('Enemies', 'btn-danger');
-		const alliesButton = this.createButton('Allies', 'btn-secondary');
+		const label = document.createElement('label');
+		label.className = 'custom-control-label my-auto';
+		label.setAttribute('for', 'toggleSwitch');
+		label.style.height = '24px';
 
-		// Create the btn-group container
-		const btnGroup = document.createElement('div');
-		btnGroup.className = 'btn-group w-75';
-		btnGroup.appendChild(enemiesButton);
-		btnGroup.appendChild(alliesButton);
+		const switchWrapper = document.createElement('div');
+		switchWrapper.className = 'custom-control custom-switch mx-2';
+		switchWrapper.style.transform = 'scale(2)';
+		switchWrapper.style.display = 'flex';
+		switchWrapper.style.alignItems = 'center';
+		switchWrapper.appendChild(input);
+		switchWrapper.appendChild(label);
 
-		toggleContainer.appendChild(btnGroup);
-		this.toggleContainer.appendChild(toggleContainer);
-
-		// Initialize as enemies
-		this.updateButtonGroup(false, enemiesButton, alliesButton);
-
-		// Add click event listeners as buttons
-		enemiesButton.addEventListener('click', () => {
-			this.updateButtonGroup(false, enemiesButton, alliesButton);
-			this.encounterManager.activeEncounter.toggleActiveGroup();
-			this.encounterUI.toggleGroupVisibility(false);
-		});
-
-		alliesButton.addEventListener('click', () => {
-			this.updateButtonGroup(true, enemiesButton, alliesButton);
-			this.encounterManager.activeEncounter.toggleActiveGroup();
-			this.encounterUI.toggleGroupVisibility(true);
-		});
+		return { input, switchWrapper };
 	}
 
-	createToggleContainer() {
+	initializeToggleSwitch() {
 		const toggleContainer = document.createElement('div');
 		toggleContainer.className = 'd-flex justify-content-center';
-		return toggleContainer;
-	}
+		toggleContainer.style.fontSize = '18px';
 
-	// Update the classes and state when a button is clicked
-	updateButtonGroup(selectingAllies, enemiesButton, alliesButton) {
-		if (selectingAllies) {
-			enemiesButton.className = 'btn btn-secondary';
-			alliesButton.className = 'btn btn-primary';
-		} else {
-			enemiesButton.className = 'btn btn-danger';
-			alliesButton.className = 'btn btn-secondary';
+		const enemiesLabel = this.createLabel('Selecting Enemies', 'badge-danger');
+		enemiesLabel.style.marginRight = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
+		enemiesLabel.style.width = "100%";
+
+		const alliesLabel = this.createLabel('Selecting Allies', 'badge-secondary');
+		alliesLabel.style.marginLeft = EncounterToggleUI.TOGGLE_LABEL_MARGIN;
+		alliesLabel.style.width = "100%";
+
+		const { input, switchWrapper } = this.createSwitch();
+
+		const updateToggleSwitchClass = () => {
+			if (input.checked) { input.classList.remove('enemy'); }
+			else { input.classList.add('enemy'); }
 		}
+
+		updateToggleSwitchClass();
+
+		const row = createBootstrapRow([
+			[null, 1],
+			[enemiesLabel, 4],
+			[switchWrapper, 2],
+			[alliesLabel, 4],
+			[null, 1]
+		], true);
+
+		// toggleContainer.append(enemiesLabel, switchWrapper, alliesLabel);
+		toggleContainer.appendChild(row);
+		this.toggleContainer.appendChild(toggleContainer);
+
+		input.addEventListener('change', () => {
+			const enemyClass = input.checked ? 'badge-secondary' : 'badge-danger';
+			const allyClass = input.checked ? 'badge-primary' : 'badge-secondary';
+			enemiesLabel.className = `badge badge-pill ${enemyClass} text-white`;
+			alliesLabel.className = `badge badge-pill ${allyClass} text-white`;
+			this.encounterManager.activeEncounter.toggleActiveGroup();
+			this.encounterUI.toggleGroupVisibility(input.checked);
+			updateToggleSwitchClass();
+		});
 	}
 
 }
