@@ -1,0 +1,7 @@
+.container {
+    width: 100%;
+    min-height: 100px;
+    background: var(--card-background);
+    box-shadow: 0 0 10px rgba(var(--card-border-rgb), 0.5);
+    overflow: hidden;
+}

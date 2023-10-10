@@ -1,0 +1,51 @@
+.container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+}
+
+.label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.option {
+    background: var(--button-bg);
+    flex: 1 1 9%;
+    border: none;
+    padding: var(--button-grid-padding);
+    border-radius: var(--button-grid-border-radius);
+    margin: var(--button-grid-margin);
+    color: var(--button-grid-color);
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.option:hover,
+.option:focus {
+    background: var(--button-bg-hover);
+}
+
+.option:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+.option:active {
+    transform: scale(0.99);
+}
+
+.option.selected {
+    background-color: var(--button-bg--active);
+}
+
+.option.selected:hover,
+.option.selected:focus {
+    background: var(--button-bg-hover--active);
+}
