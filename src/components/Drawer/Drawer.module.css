@@ -1,0 +1,24 @@
+.drawer {
+    transform: translateZ(0);
+    z-index: 102;
+    /* 53px is navbar height */
+    max-height: calc(100% - 53px);
+    top: 53px;
+
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    touch-action: none;
+
+    transition: transform .5s,-webkit-transform .5s;
+    width: 400px;
+    align-items: stretch;
+    background: #f5f9fc;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}
+
+.drawer.closed {
+    transform: 'translate3d(100%,0,0)',
+}

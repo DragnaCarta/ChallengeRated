@@ -76,7 +76,7 @@
   --button-grid-margin: 1px;
   --button-grid-color: var(--white);
 
-  --card-background: var(--background-secondary);
+  --card-background: var(--white);
 
   --card-title-background: #2B2B2B;
   --card-title-color: var(--white);
@@ -86,7 +86,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: var(--background);
+  background: #ebf1f5;
 }
 
 html,

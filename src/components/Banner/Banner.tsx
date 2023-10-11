@@ -9,11 +9,11 @@ export default function Banner() {
     <section className={styles.container}>
       <Container>
         <div style={{ display: 'flex', flexDirection: 'row', marginBottom: '8px' }}>
-          <Image src={ImgLogo} width="48" height="48" alt="Challenge Rated Logo" />
-          <h1 style={{ paddingLeft: '8px'}}>Challenge Rated</h1>
+          <Image src={ImgLogo} width="32" height="32" alt="Challenge Rated Logo" />
+          <h1 style={{ paddingLeft: '8px', fontSize: '22px' }}>Challenge Rated</h1>
         </div>
-        <p style={{ fontWeight: 500 }}>An encounter-building tool for D&D 5th edition</p>
-        <p>By <a style={{ color: 'yellow' }} href="https://www.patreon.com/DragnaCarta/posts">DragnaCarta</a></p>
+        {/* <p style={{ fontWeight: 500 }}>An encounter-building tool for D&D 5th edition</p>
+        <p>By <a style={{ color: 'yellow' }} href="https://www.patreon.com/DragnaCarta/posts">DragnaCarta</a></p> */}
       </Container>
     </section>
   )

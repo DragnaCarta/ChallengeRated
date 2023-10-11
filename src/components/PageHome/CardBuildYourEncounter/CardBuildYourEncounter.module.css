@@ -29,3 +29,35 @@
   .reset:hover {
     background-color: red;
   }
+
+  .reset:focus, .reset:active {
+    background-color: dodgerblue;
+  }
+
+  .challengeRatingCount {
+    min-width: 32px;
+    text-align: center;
+  }
+  
+  .btnChallengeRating {
+    cursor: pointer;
+    border: none;
+    padding: 0 16px;
+    color: var(--white);
+  }
+  
+  .btnChallengeRating.increment {
+    background: var(--light-blue);
+  }
+  
+  .btnChallengeRating.increment:hover {
+    background: var(--bright-blue);
+  }
+  
+  .btnChallengeRating.decrement {
+    background: var(--light-red);
+  }
+  
+  .btnChallengeRating.decrement:hover {
+    background: var(--bright-red);
+  }

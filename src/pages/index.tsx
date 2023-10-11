@@ -7,6 +7,7 @@ import Banner from '@/components/Banner/Banner'
 import Card from '@/components/Card/Card'
 import CardTitle from '@/components/CardTitle/CardTitle';
 import Container from '@/components/Container/Container';
+import Drawer from '@/components/Drawer/Drawer';
 import EncounterCalculator from '@/lib/EncounterCalculator';
 import CardBuildYourParty from '@/components/PageHome/CardBuildYourParty/CardBuildYourParty';
 import CardBuildYourEncounter from '@/components/PageHome/CardBuildYourEncounter/CardBuildYourEncounter';
@@ -23,16 +24,6 @@ export default function Home() {
   const [allies, setAllies] = useState<number[]>([]);
 
   const isPartySelected = partySize > 0 && partyAverageLevel > 0;
-
-  //
-  const enemyCrOccurrences = enemies.reduce(function (acc: Record<number, number>, curr) {
-    return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
-  }, {});
-
-  const allyCrOccurrences = allies.reduce(function (acc: Record<number, number>, curr) {
-      return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
-  }, {});
-
 
   //
   const { hpLost, resourcesSpent, encounterDifficulty } = _encounterCalculator.recalculateDifficulty(partySize, partyAverageLevel, enemies, allies);
@@ -64,21 +55,29 @@ export default function Home() {
             partyAverageLevel={partyAverageLevel}
             setPartyAverageLevel={setPartyAverageLevel}
           />
-          
+
           <CardBuildYourEncounter
             addCreature={addCreature}
             creatureToggle={creatureToggle}
             setCreatureToggle={setCreatureToggle}
+            enemies={enemies}
+            setEnemies={setEnemies}
+            allies={allies}
+            setAllies={setAllies}
           />
 
+        {/* <Drawer> */}
         {/* Card 3 - Encounter Summary */}
         <Card>
-          <CardTitle>Encounter Summary</CardTitle>
+          <CardTitle>
+            <h2>Encounter Summary</h2>
+          </CardTitle>
           <div style={{ display: 'flex', flexDirection: 'row'}}>
 
           <div style={{ width: '50%'}}>
             <div style={{ margin: '1rem' }}>
-              <p style={{ fontWeight: '700'}}>{encounterDifficulty}</p>
+              <p style={{ fontWeight: '700'}}>Difficulty</p>
+              <p><DynamicText>{encounterDifficulty}</DynamicText></p>
             </div>
             <div style={{ margin: '1rem' }}>
               <p style={{ fontWeight: '700'}}>HP Loss</p>
@@ -89,6 +88,7 @@ export default function Home() {
               <p><DynamicText>{Math.round(resourcesSpent)}</DynamicText></p>
             </div>
           </div>
+          
             
             {/* Left */}
             <div style={{ width: '50%'}}>
@@ -96,35 +96,14 @@ export default function Home() {
                 <p style={{ fontWeight: '700'}}>Party:</p>
                 <p><DynamicText>{partySize}</DynamicText> PCs at Level <DynamicText>{partyAverageLevel}</DynamicText></p>
               </div>
-              <div style={{ margin: '1rem' }}>
-                <p style={{ fontWeight: '700'}}>Enemies:</p>
-                <ul>
-                  {Object.keys(enemyCrOccurrences).map((crString, i) => {
-                    const cr = parseFloat(crString);
-                    const crCount = enemyCrOccurrences[cr];
-                    return (
-                      <li key={i}>{cr} x {crCount}</li>
-                    )}
-                  )}
-                </ul>
-                <p style={{ fontWeight: '700'}}>Allies:</p>
-                <ul>
-                  {Object.keys(allyCrOccurrences).map((crString, i) => {
-                    const cr = parseFloat(crString);
-                    const crCount = allyCrOccurrences[cr];
-                    return (
-                      <li key={i}>{cr} x {crCount}</li>
-                    )}
-                  )}
-                </ul>
-              </div>
             </div>
 
           </div>
         </Card>
-
-
         </Container>
+
+        {/* </Drawer> */}
+
       </main>
     </>
   )
